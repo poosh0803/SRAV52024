@@ -21,6 +21,7 @@ void autonomous(void)
 }
 void usercontrol(void)
 {
+  driveCode_Init();
   while (1) {
     wait(20, msec);
   }
