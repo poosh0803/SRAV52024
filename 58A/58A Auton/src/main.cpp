@@ -10,17 +10,15 @@
 #include "../include/vex.h"
 #include "../include/robot-config.h"
 #include "../include/display.h"
-#include "../include/auton.h"
 #include "../include/drive-assist.h"
 #include "../include/driveCode.h"
 using namespace vex;
 competition Competition;
 void autonomous(void)
 {
-  autonPlanA();
-  autonPlanB();
-  autonPlanC();
-  autonSkill();
+  // autonPlanA();
+  // autonPlanB();
+  // autonSkill();
 }
 void usercontrol(void)
 {

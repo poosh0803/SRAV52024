@@ -5,12 +5,10 @@
 
 #include "v5.h"
 #include "v5_vcs.h"
-
 #include "PlanA.h"
 #include "PlanB.h"
-#include "PlanC.h"
+#include "PlanSkill.h"
 
-#include "skill.h"
 
 #define waitUntil(condition)                                                   \
   do {                                                                         \
