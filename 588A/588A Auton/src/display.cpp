@@ -1,6 +1,5 @@
 #include"../include/vex.h"
 #include "../include/robot-config.h"
-#include "../include/drive-controller.h"
 #include "vex_brain.h"
 #include <string>
 double VERSION = 3.2;
@@ -135,11 +134,11 @@ void checkTemp(int index)
             }
             break;
         case 7:
-            if(ShooterArm.temperature(percent) >= 60)
+            if(Lift.temperature(percent) >= 60)
             {
                 Brain.Screen.setPenColor(vex::color::red);
             }
-            else if (ShooterArm.temperature(percent) >= 40)
+            else if (Lift.temperature(percent) >= 40)
             {
                 Brain.Screen.setPenColor(vex::color::yellow);
             }
@@ -166,49 +165,51 @@ void checkTemp(int index)
 }
 void checkConnect(int index)
 {
-    if(index == 7)
-    {
-        if(!connection[index-1] || !connection[index])
-        {
-            Brain.Screen.setPenColor(vex::color::red);
-        }
-        else
-        {
-            Brain.Screen.setPenColor(vex::color::green);
-            checkTemp(index);
-        }
-    }
-    else if(!connection[index-1])
-    {
-        Brain.Screen.setPenColor(vex::color::red);
-    }
-    else
-    {
-        Brain.Screen.setPenColor(vex::color::green);
-        checkTemp(index);
-    }
+    Brain.Screen.setPenColor(vex::color::green);
+    checkTemp(index);
+    // if(index == 7)
+    // {
+    //     if(!connection[index-1] || !connection[index])
+    //     {
+    //         Brain.Screen.setPenColor(vex::color::red);
+    //     }
+    //     else
+    //     {
+    //         Brain.Screen.setPenColor(vex::color::green);
+    //         checkTemp(index);
+    //     }
+    // }
+    // else if(!connection[index-1])
+    // {
+    //     Brain.Screen.setPenColor(vex::color::red);
+    // }
+    // else
+    // {
+    //     Brain.Screen.setPenColor(vex::color::green);
+    //     checkTemp(index);
+    // }
 }
 void sensorCheck(int index)
 {
-    if(!sensors[index-1])
-    {
-        Brain.Screen.setPenColor(vex::color::red);
-    }
-    else
-    {
-        Brain.Screen.setPenColor(vex::color::green);
-    }
+    // if(!sensors[index-1])
+    // {
+    //     Brain.Screen.setPenColor(vex::color::red);
+    // }
+    // else
+    // {
+    //     Brain.Screen.setPenColor(vex::color::green);
+    // }
 }
 void sensorsDisplay()
 {
-    selfCheck();
-    Brain.Screen.setFont(vex::fontType::prop20);
-    sensorCheck(1);
-    Brain.Screen.printAt(413, 20, "Inertial");
-    sensorCheck(2);
-    Brain.Screen.printAt(405, 45, "BallDetecter");
-    sensorCheck(3);
-    Brain.Screen.printAt(390, 70, "Controller");
+    // selfCheck();
+    // Brain.Screen.setFont(vex::fontType::prop20);
+    // sensorCheck(1);
+    // Brain.Screen.printAt(413, 20, "Inertial");
+    // sensorCheck(2);
+    // Brain.Screen.printAt(405, 45, "BallDetecter");
+    // sensorCheck(3);
+    // Brain.Screen.printAt(390, 70, "Controller");
 }
 int tempGraph()
 {
@@ -216,7 +217,7 @@ int tempGraph()
     {
         if(page == 1)
         {
-            selfCheck();
+            // selfCheck();
             Brain.Screen.setFont(vex::fontType::prop20);
             checkConnect(1);
             Brain.Screen.printAt(245, 20, "Left1  : %d c", (int)L1.temperature(percent));
@@ -231,7 +232,7 @@ int tempGraph()
             checkConnect(6);
             Brain.Screen.printAt(245, 130, "Right3 : %d c", (int)R3.temperature(percent));
             checkConnect(7);
-            Brain.Screen.printAt(245, 160, "BigArm: %d c", (int)ShooterArm.temperature(percent));
+            Brain.Screen.printAt(245, 160, "Lift: %d c", (int)Lift.temperature(percent));
             checkConnect(8);
             Brain.Screen.printAt(245, 180, "Intake : %d c", (int)Intake.temperature(percent));
             wait(3000, msec);
