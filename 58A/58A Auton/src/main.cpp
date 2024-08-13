@@ -10,7 +10,6 @@
 #include "../include/vex.h"
 #include "../include/robot-config.h"
 #include "../include/display.h"
-#include "../include/drive-assist.h"
 #include "../include/driveCode.h"
 using namespace vex;
 competition Competition;
@@ -22,8 +21,6 @@ void autonomous(void)
 }
 void usercontrol(void)
 {
-  drive_assist_Init();
-  controllerReg();
   while (1) {
     wait(20, msec);
   }
