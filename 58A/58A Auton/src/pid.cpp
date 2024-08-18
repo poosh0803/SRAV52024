@@ -38,18 +38,18 @@ double tolerance = 30;
 //Set Motor Position
 void printPosition(double L, double R)
 {
-    printf("L: %.2f(%.2f), R: %.2f(%.2f)\n", LeftDrive.position(degrees),L, RightDrive.position(degrees),R);
+    printf("L: %.2f(%.2f), R: %.2f(%.2f)\n", LeftDriveSmart.position(degrees),L, RightDriveSmart.position(degrees),R);
 }
 void setMotorPos(double Left, double Right)
 {
     double startTime = Brain.Timer.value();
     integralMotor1 = 0.0;
     integralMotor2 = 0.0;
-    LeftDrive.setPosition(0, degrees);
-    RightDrive.setPosition(0, degrees);
+    LeftDriveSmart.setPosition(0, degrees);
+    RightDriveSmart.setPosition(0, degrees);
     targetLeftDrivePosition = Left;
     targetRightDrivePosition = Right;
-    while (fabs(targetLeftDrivePosition - LeftDrive.position(degrees)) > tolerance || fabs(targetRightDrivePosition - RightDrive.position(degrees)) > tolerance)
+    while (fabs(targetLeftDrivePosition - LeftDriveSmart.position(degrees)) > tolerance || fabs(targetRightDrivePosition - RightDriveSmart.position(degrees)) > tolerance)
     {
         // printPosition(targetLeftDrivePosition,targetRightDrivePosition);
         wait(20,msec);
@@ -171,8 +171,8 @@ int pidLoop()
     double currentMotor2Position;
     while (pidEnabled)
     {
-        currentMotor1Position = LeftDrive.position(degrees);
-        currentMotor2Position = RightDrive.position(degrees);
+        currentMotor1Position = LeftDriveSmart.position(degrees);
+        currentMotor2Position = RightDriveSmart.position(degrees);
         if(turnANDdrive == 0)
         {
             controlSignalMotor1 = calculateControlSignal(targetLeftDrivePosition, currentMotor1Position, prevErrorMotor1, integralMotor1,KpTurn, KiTurn, KdTurn);
@@ -183,8 +183,8 @@ int pidLoop()
             controlSignalMotor1 = calculateControlSignal(targetLeftDrivePosition, currentMotor1Position, prevErrorMotor1, integralMotor1,KpDrive, KiDrive, KdDrive);
             controlSignalMotor2 = calculateControlSignal(targetRightDrivePosition, currentMotor2Position, prevErrorMotor2, integralMotor2,KpDrive, KiDrive, KdDrive);
         }
-        LeftDrive.spin(forward, controlSignalMotor1, percent);
-        RightDrive.spin(forward, controlSignalMotor2, percent);
+        LeftDriveSmart.spin(forward, controlSignalMotor1, percent);
+        RightDriveSmart.spin(forward, controlSignalMotor2, percent);
         wait(timeStep, msec);
     }
     return 0;
@@ -200,16 +200,16 @@ int debugMonitor()
 void pid_Init()
 {
     pidEnabled = true;
-    LeftDrive.setPosition(0, degrees);
-    LeftDrive.setMaxTorque(100,percent);
-    RightDrive.setPosition(0, degrees);
-    RightDrive.setMaxTorque(100,percent);
+    LeftDriveSmart.setPosition(0, degrees);
+    LeftDriveSmart.setMaxTorque(100,percent);
+    RightDriveSmart.setPosition(0, degrees);
+    RightDriveSmart.setMaxTorque(100,percent);
     vex::task pidLoopTask(pidLoop);
     vex::task debugMonitorTask(debugMonitor);
 }
 void pid_Ends()
 {
     pidEnabled = false;
-    LeftDrive.stop();
-    RightDrive.stop();
+    LeftDriveSmart.stop();
+    RightDriveSmart.stop();
 }
