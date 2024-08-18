@@ -6,4 +6,9 @@ using namespace vex;
 
 void autonPlanA()
 {
+    pid_Init();
+    
+    Drivetrain.setDriveVelocity(100,percent);
+    Drivetrain.driveFor(forward,48, inches);
+    Drivetrain.turnFor(left,90,degrees);
 }

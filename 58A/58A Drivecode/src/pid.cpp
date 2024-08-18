@@ -131,6 +131,7 @@ void drive_for_time(directionType direction, double timeLength)
 }
 void drive_w_PID(directionType dir, double target, distanceUnits units, double speed)
 {
+    //motor one spin = 320mm * 48/84 = 182.857
     turnANDdrive = 1;
     if(units == vex::distanceUnits::cm)
     {

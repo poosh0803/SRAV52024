@@ -9,7 +9,7 @@
 using namespace vex;
 int turnANDdrive = 0;
 bool pidEnabled = false;
-double gearRatio = 48.0/84.0;
+double gearRatio = 72.0/48.0;
 double wheelTravel = 320;
 // Target positions for each motor (adjust these based on your task)
 double targetLeftDrivePosition = 0;
