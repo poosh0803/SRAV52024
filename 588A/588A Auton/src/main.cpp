@@ -15,12 +15,13 @@ using namespace vex;
 competition Competition;
 void autonomous(void)
 {
-  // autonPlanA();
+  autonPlanA();
   // autonPlanB();
   // autonSkill();
 }
 void usercontrol(void)
 {
+  autonPlanA();
   driveCode_Init();
   while (1) {
     wait(20, msec);
