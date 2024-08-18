@@ -21,7 +21,6 @@ void autonomous(void)
 }
 void usercontrol(void)
 {
-  autonPlanA();
   controllerReg();
   while (1) {
     wait(20, msec);
