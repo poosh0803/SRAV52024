@@ -15,10 +15,11 @@ using namespace vex;
 competition Competition;
 void autonomous(void)
 {
-  autonPlanA();
+  // autonPlanA();
   // autonPlanB();
-  // autonSkill();
+  autonSkill();
 }
+
 void usercontrol(void)
 {
   controllerReg();
@@ -26,6 +27,7 @@ void usercontrol(void)
     wait(20, msec);
   }
 }
+
 int main()
 {
   robot_init();

@@ -100,7 +100,7 @@ std::pair<turnType, double> determineTurnDirection(double currentHeading, double
 
     return std::make_pair(direction, angleToTurn);
 }
-void turn_to_heading(double targetHeading)
+void turnToHeading2(double targetHeading)
 {
     turnANDdrive = 0;
     auto result = determineTurnDirection(Imu.heading(), targetHeading);
@@ -133,7 +133,7 @@ void drive_for_time(directionType direction, double timeLength)
     wait(timeLength, seconds);
     setMotorPos(0, 0);
 }
-void drive_w_PID(directionType dir, double target, distanceUnits units, double speed)
+void driveFor2(directionType dir, double target, distanceUnits units, double speed)
 {
     driveSpeedCap = speed;
     turnANDdrive = 1;
@@ -141,7 +141,7 @@ void drive_w_PID(directionType dir, double target, distanceUnits units, double s
     {
         target = target * 10;
     }
-    else if(units ==vex::distanceUnits::in)
+    else if(units == vex::distanceUnits::in)
     {
         target = target * 25.4;
     }
