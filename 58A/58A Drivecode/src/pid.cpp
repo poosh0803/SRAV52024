@@ -11,6 +11,8 @@ int turnANDdrive = 0;
 bool pidEnabled = false;
 double gearRatio = 48.0/84.0;
 double wheelTravel = 320;
+double driveSpeedCap = 100;
+double turnSpeedCap = 100;
 // Target positions for each motor (adjust these based on your task)
 double targetLeftDrivePosition = 0;
 double targetRightDrivePosition = 0;
@@ -23,33 +25,33 @@ double integralMotor2 = 0.0;
 double currentVelocityMotor1 = 0.0;
 double currentVelocityMotor2 = 0.0;
 // Turning PID parameters
-const double KpTurn = 0.09;
+const double KpTurn = 0.085;
 const double KiTurn = 0.000028;
-const double KdTurn = 0.000001;
+const double KdTurn = -0.005;
 // Driving PID parameters
-const double KpDrive = 0.10;
-const double KiDrive = 0.000025;
-const double KdDrive = 0.000001;
+const double KpDrive = 0.08;
+const double KiDrive = 0.0000;
+const double KdDrive = 0.075;
 const double timeStep = 10.0; // Time between each control loop update (in milliseconds)
 //Modify for turning
-const double veryCoolConstant = 5.605;
+const double veryCoolConstant = 5.84;
 //Modify for tolerance
-double tolerance = 30;
+double tolerance = 15;
 //Set Motor Position
 void printPosition(double L, double R)
 {
-    printf("L: %.2f(%.2f), R: %.2f(%.2f)\n", LeftDrive.position(degrees),L, RightDrive.position(degrees),R);
+    printf("L: %.2f(%.2f), R: %.2f(%.2f)\n", LeftDriveSmart.position(degrees),L, RightDriveSmart.position(degrees),R);
 }
 void setMotorPos(double Left, double Right)
 {
     double startTime = Brain.Timer.value();
     integralMotor1 = 0.0;
     integralMotor2 = 0.0;
-    LeftDrive.setPosition(0, degrees);
-    RightDrive.setPosition(0, degrees);
+    LeftDriveSmart.setPosition(0, degrees);
+    RightDriveSmart.setPosition(0, degrees);
     targetLeftDrivePosition = Left;
     targetRightDrivePosition = Right;
-    while (fabs(targetLeftDrivePosition - LeftDrive.position(degrees)) > tolerance || fabs(targetRightDrivePosition - RightDrive.position(degrees)) > tolerance)
+    while (fabs(targetLeftDrivePosition - LeftDriveSmart.position(degrees)) > tolerance || fabs(targetRightDrivePosition - RightDriveSmart.position(degrees)) > tolerance)
     {
         // printPosition(targetLeftDrivePosition,targetRightDrivePosition);
         wait(20,msec);
@@ -98,8 +100,9 @@ std::pair<turnType, double> determineTurnDirection(double currentHeading, double
 
     return std::make_pair(direction, angleToTurn);
 }
-void turn_to_heading(double targetHeading)
+void turnToHeading2(double targetHeading)
 {
+    turnANDdrive = 0;
     auto result = determineTurnDirection(Imu.heading(), targetHeading);
     turnType direction = result.first;
     double angleToTurn = result.second;
@@ -115,6 +118,7 @@ void turn_to_heading(double targetHeading)
 }
 void drive_for_time(directionType direction, double timeLength)
 {
+    turnANDdrive = 1;
     setMotorPos(0, 0);
     if(direction == forward)
     {
@@ -129,15 +133,15 @@ void drive_for_time(directionType direction, double timeLength)
     wait(timeLength, seconds);
     setMotorPos(0, 0);
 }
-void drive_w_PID(directionType dir, double target, distanceUnits units, double speed)
+void driveFor2(directionType dir, double target, distanceUnits units, double speed)
 {
-    //motor one spin = 320mm * 48/84 = 182.857
+    driveSpeedCap = speed;
     turnANDdrive = 1;
     if(units == vex::distanceUnits::cm)
     {
         target = target * 10;
     }
-    else if(units ==vex::distanceUnits::in)
+    else if(units == vex::distanceUnits::in)
     {
         target = target * 25.4;
     }
@@ -172,8 +176,8 @@ int pidLoop()
     double currentMotor2Position;
     while (pidEnabled)
     {
-        currentMotor1Position = LeftDrive.position(degrees);
-        currentMotor2Position = RightDrive.position(degrees);
+        currentMotor1Position = LeftDriveSmart.position(degrees);
+        currentMotor2Position = RightDriveSmart.position(degrees);
         if(turnANDdrive == 0)
         {
             controlSignalMotor1 = calculateControlSignal(targetLeftDrivePosition, currentMotor1Position, prevErrorMotor1, integralMotor1,KpTurn, KiTurn, KdTurn);
@@ -183,9 +187,14 @@ int pidLoop()
         {
             controlSignalMotor1 = calculateControlSignal(targetLeftDrivePosition, currentMotor1Position, prevErrorMotor1, integralMotor1,KpDrive, KiDrive, KdDrive);
             controlSignalMotor2 = calculateControlSignal(targetRightDrivePosition, currentMotor2Position, prevErrorMotor2, integralMotor2,KpDrive, KiDrive, KdDrive);
+            if(controlSignalMotor1 > driveSpeedCap) {controlSignalMotor1 = driveSpeedCap;}
+            else if(controlSignalMotor1 < -driveSpeedCap) {controlSignalMotor1 = -driveSpeedCap;}
+            if(controlSignalMotor2 > driveSpeedCap) {controlSignalMotor2 = driveSpeedCap;}
+            else if(controlSignalMotor2 < -driveSpeedCap) {controlSignalMotor2 = -driveSpeedCap;}
+            
         }
-        LeftDrive.spin(forward, controlSignalMotor1, percent);
-        RightDrive.spin(forward, controlSignalMotor2, percent);
+        LeftDriveSmart.spin(forward, controlSignalMotor1, percent);
+        RightDriveSmart.spin(forward, controlSignalMotor2, percent);
         wait(timeStep, msec);
     }
     return 0;
@@ -201,16 +210,18 @@ int debugMonitor()
 void pid_Init()
 {
     pidEnabled = true;
-    LeftDrive.setPosition(0, degrees);
-    LeftDrive.setMaxTorque(100,percent);
-    RightDrive.setPosition(0, degrees);
-    RightDrive.setMaxTorque(100,percent);
+    LeftDriveSmart.setPosition(0, degrees);
+    LeftDriveSmart.setMaxTorque(100,percent);
+    LeftDriveSmart.setStopping(hold);
+    RightDriveSmart.setPosition(0, degrees);
+    RightDriveSmart.setMaxTorque(100,percent);
+    RightDriveSmart.setStopping(hold);
     vex::task pidLoopTask(pidLoop);
     vex::task debugMonitorTask(debugMonitor);
 }
 void pid_Ends()
 {
     pidEnabled = false;
-    LeftDrive.stop();
-    RightDrive.stop();
+    LeftDriveSmart.stop();
+    RightDriveSmart.stop();
 }

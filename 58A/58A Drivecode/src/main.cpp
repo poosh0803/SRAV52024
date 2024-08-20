@@ -17,18 +17,21 @@ void autonomous(void)
 {
   // autonPlanA();
   // autonPlanB();
-  // autonSkill();
+  autonSkill();
 }
+
 void usercontrol(void)
 {
+  controllerReg();
   while (1) {
     wait(20, msec);
   }
 }
+
 int main()
 {
   robot_init();
-  // imu_init();
+  imu_init();
   display_init();
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
