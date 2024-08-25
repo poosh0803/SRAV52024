@@ -6,5 +6,4 @@ using namespace vex;
 
 void autonPlanA()
 {
-    pid_Init();
 }
