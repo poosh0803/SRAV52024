@@ -21,7 +21,6 @@ void autonomous(void)
 }
 void usercontrol(void)
 {
-  autonPlanA();
   driveCode_Init();
   while (1) {
     wait(20, msec);
@@ -30,7 +29,7 @@ void usercontrol(void)
 int main()
 {
   robot_init();
-  // imu_init();
+  imu_init();
   display_init();
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);

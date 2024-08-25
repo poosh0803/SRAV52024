@@ -66,6 +66,7 @@ void mogoDOWN()
 void liftUP()
 {
     Lift.spin(forward);
+    Lift.setStopping(hold);
 }
 void liftDOWN()
 {

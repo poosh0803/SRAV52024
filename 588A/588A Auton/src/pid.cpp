@@ -29,7 +29,7 @@ const double KpTurn = 0.26;
 const double KiTurn = 0.000;
 const double KdTurn = -0.12;
 // Driving PID parameters
-const double KpDrive = 0.23;
+const double KpDrive = 0.234;
 const double KiDrive = 0.000;
 const double KdDrive = 0.35;
 const double timeStep = 10.0; // Time between each control loop update (in milliseconds)
@@ -100,9 +100,10 @@ std::pair<turnType, double> determineTurnDirection(double currentHeading, double
 
     return std::make_pair(direction, angleToTurn);
 }
-void turn_to_heading(double targetHeading)
+void turn_to_heading(double targetHeading, double speed)
 {
     turnANDdrive = 0;
+    turnSpeedCap = speed;
     auto result = determineTurnDirection(Imu.heading(), targetHeading);
     turnType direction = result.first;
     double angleToTurn = result.second;
@@ -182,6 +183,10 @@ int pidLoop()
         {
             controlSignalMotor1 = calculateControlSignal(targetLeftDrivePosition, currentMotor1Position, prevErrorMotor1, integralMotor1,KpTurn, KiTurn, KdTurn);
             controlSignalMotor2 = calculateControlSignal(targetRightDrivePosition, currentMotor2Position, prevErrorMotor2, integralMotor2,KpTurn, KiTurn, KdTurn);
+            if(controlSignalMotor1 > turnSpeedCap) {controlSignalMotor1 = turnSpeedCap;}
+            else if(controlSignalMotor1 < -turnSpeedCap) {controlSignalMotor1 = -turnSpeedCap;}
+            if(controlSignalMotor2 > turnSpeedCap) {controlSignalMotor2 = turnSpeedCap;}
+            else if(controlSignalMotor2 < -turnSpeedCap) {controlSignalMotor2 = -turnSpeedCap;}
         }
         else if(turnANDdrive == 1)
         {
