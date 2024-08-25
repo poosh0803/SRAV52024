@@ -22,4 +22,8 @@ extern motor mogo;
 // extern bool sensors[];
 void robot_init(void);
 void imu_init(void);
+void mogoGOUP(void);
+void mogoGODOWN(void);
+void intakeSTART(void);
+void intakeSTOP(void);
 // void selfCheck(void);

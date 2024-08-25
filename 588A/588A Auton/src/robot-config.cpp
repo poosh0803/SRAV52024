@@ -17,7 +17,7 @@ motor R3 = motor(PORT6, ratio18_1, true);//
 motor_group RightDrive = motor_group(R1, R2, R3);
 motor_group LeftDrive = motor_group(L1, L2, L3);
 drivetrain Drivetrain = drivetrain(LeftDrive, RightDrive, 320, 280, 241, mm);
-inertial Imu = inertial(PORT16);//
+inertial Imu = inertial(PORT18);//
 motor PrimaryIntake = motor(PORT21, ratio18_1, false);//
 motor_group Intake = motor_group(PrimaryIntake);//
 motor mogo = motor(PORT13, ratio18_1, false);//
@@ -56,4 +56,45 @@ void imu_init(void)
     Brain.Screen.setCursor(1,1);
     // Controller1.rumble("..");
     printf("Imu initialized\n");
+}
+void mogoGOUP()
+{
+    mogo.spinFor(forward, 360, degrees, false);
+}
+void mogoGODOWN()
+{
+    mogo.spin(reverse);
+    wait(300,msec);
+    while(fabs(mogo.velocity(percent)) > 5)
+    {
+        wait(10,msec);
+    }
+    mogo.stop();
+}
+bool autoIntake = false;
+int intakeLoop()
+{
+    while(autoIntake)
+    {
+        Intake.spin(forward);
+        wait(100,msec);
+        if(Intake.velocity(percent) < 10)
+        {
+            Intake.spinFor(reverse, 360, degrees);
+        }
+        wait(10,msec);
+    }
+    return 0;
+}
+
+void intakeSTART()
+{
+    autoIntake = true;
+    Intake.spin(forward);
+    task intakeLoopTask(intakeLoop);
+}
+void intakeSTOP()
+{
+    autoIntake = false;
+    Intake.stop();
 }

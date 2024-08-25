@@ -5,21 +5,6 @@
 #include "vex_units.h"
 using namespace vex;
 
-void mogoGOUP()
-{
-    mogo.spinFor(forward, 360, degrees, false);
-}
-void mogoGODOWN()
-{
-    mogo.spin(reverse);
-    wait(300,msec);
-    while(fabs(mogo.velocity(percent)) > 5)
-    {
-        wait(10,msec);
-    }
-    mogo.stop();
-}
-
 void autonPlanA()
 {
     mogoGOUP();
