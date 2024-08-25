@@ -98,13 +98,44 @@ int controller_loop()
         // Spin both motors in the forward direction.
         LeftDriveSmart.spin(forward);
         RightDriveSmart.spin(forward);
+        // if(fabs(Intake.current(amp)) > 2.5)
+        // {
+        //     Intake.stop();
+        //     fwdIntake = false;
+        // }
 
         wait(25, msec);
+    }
+}
+int intakeMonitor()
+{
+    while(true)
+    {
+        if(fwdIntake) 
+        {
+            wait(200,msec);
+            if(fabs(Intake.velocity(percent)) < 5)
+            {
+                Intake.stop();
+                fwdIntake = false;
+            }
+        }
+        else if(revToggle) 
+        {
+            wait(200,msec);
+            if(fabs(Intake.velocity(percent)) < 5)
+            {
+                Intake.stop();
+                revToggle = false;
+            }
+        }
+        wait(10,msec);
     }
 }
 
 void controllerReg()
 {
+    task intakeMonitorTask(intakeMonitor);
     task controllerLoopTask(controller_loop);
     Controller.ButtonL1.pressed(toggleIntakeFwd);
     Controller.ButtonL2.pressed(toggleIntakeRev);
