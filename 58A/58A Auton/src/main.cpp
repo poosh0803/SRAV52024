@@ -15,9 +15,9 @@ using namespace vex;
 competition Competition;
 void autonomous(void)
 {
-  // autonPlanA();
+  autonPlanA();
   // autonPlanB();
-  autonSkill();
+  // autonSkill();
 }
 
 void usercontrol(void)

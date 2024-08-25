@@ -100,8 +100,9 @@ std::pair<turnType, double> determineTurnDirection(double currentHeading, double
 
     return std::make_pair(direction, angleToTurn);
 }
-void turnToHeading2(double targetHeading)
+void turnToHeading2(double targetHeading, double speed)
 {
+    turnSpeedCap = speed;
     turnANDdrive = 0;
     auto result = determineTurnDirection(Imu.heading(), targetHeading);
     turnType direction = result.first;
@@ -182,6 +183,10 @@ int pidLoop()
         {
             controlSignalMotor1 = calculateControlSignal(targetLeftDrivePosition, currentMotor1Position, prevErrorMotor1, integralMotor1,KpTurn, KiTurn, KdTurn);
             controlSignalMotor2 = calculateControlSignal(targetRightDrivePosition, currentMotor2Position, prevErrorMotor2, integralMotor2,KpTurn, KiTurn, KdTurn);
+            if(controlSignalMotor1 > turnSpeedCap) {controlSignalMotor1 = turnSpeedCap;}
+            else if(controlSignalMotor1 < -turnSpeedCap) {controlSignalMotor1 = -turnSpeedCap;}
+            if(controlSignalMotor2 > turnSpeedCap) {controlSignalMotor2 = turnSpeedCap;}
+            else if(controlSignalMotor2 < -turnSpeedCap) {controlSignalMotor2 = -turnSpeedCap;}
         }
         else if(turnANDdrive == 1)
         {
