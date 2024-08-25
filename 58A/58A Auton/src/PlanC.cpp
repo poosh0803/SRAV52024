@@ -4,7 +4,6 @@
 #include "../include/pid.h"
 using namespace vex;
 
-void autonPlanA()
+void autonPlanC()
 {
-    pid_Init();
 }
