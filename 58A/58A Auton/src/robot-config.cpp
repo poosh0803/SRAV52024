@@ -21,7 +21,7 @@ inertial Imu = inertial(PORT4);
 motor primaryIntake = motor(PORT3, ratio18_1, false);
 motor secondIntake = motor(PORT4, ratio18_1, false);
 motor_group Intake = motor_group(primaryIntake, secondIntake);
-motor Lift = motor(PORT17, ratio18_1, false);
+motor Lift = motor(PORT17, ratio36_1, false);
 digital_out mogo = digital_out(Brain.ThreeWirePort.A);
 
 void robot_init(void)
