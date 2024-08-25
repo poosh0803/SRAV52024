@@ -17,13 +17,12 @@ motor R3 = motor(PORT6, ratio18_1, true);//
 motor_group RightDrive = motor_group(R1, R2, R3);
 motor_group LeftDrive = motor_group(L1, L2, L3);
 drivetrain Drivetrain = drivetrain(LeftDrive, RightDrive, 320, 280, 241, mm);
-inertial Imu = inertial(PORT15);//
+inertial Imu = inertial(PORT16);//
 motor PrimaryIntake = motor(PORT21, ratio18_1, false);//
 motor_group Intake = motor_group(PrimaryIntake);//
 motor mogo = motor(PORT13, ratio18_1, false);//
-motor Lift1 = motor(PORT16, ratio18_1, true);//
-motor Lift2 = motor(PORT18, ratio18_1, false);//
-motor_group Lift = motor_group(Lift1,Lift2);
+motor Lift1 = motor(PORT16, ratio36_1, true);//
+motor_group Lift = motor_group(Lift1);
 
 void robot_init(void)
 {
