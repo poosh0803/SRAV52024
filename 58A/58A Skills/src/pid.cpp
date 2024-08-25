@@ -13,6 +13,8 @@ double gearRatio = 48.0/84.0;
 double wheelTravel = 320;
 double driveSpeedCap = 100;
 double turnSpeedCap = 100;
+double leftSpeedCap = 100;
+double rightSpeedCap = 100;
 // Target positions for each motor (adjust these based on your task)
 double targetLeftDrivePosition = 0;
 double targetRightDrivePosition = 0;
@@ -71,6 +73,26 @@ void turn_w_PID(turnType dir, double target)
     {
         setMotorPos(spinValue, -spinValue);
     }
+}
+void fancyCurve(double Ltarget, double Rtarget, vex::distanceUnits units,double Lspeed, double Rspeed)
+{
+    turnANDdrive = 2;
+    if(units == vex::distanceUnits::cm)
+    {
+        Ltarget = Ltarget * 10;
+        Rtarget = Rtarget * 10;
+    }
+    else if(units == vex::distanceUnits::in)
+    {
+        Ltarget = Ltarget * 25.4;
+        Rtarget = Rtarget * 25.4;
+
+    }
+    double LspinValue = (Ltarget / wheelTravel / gearRatio) * 360;
+    double RspinValue = (Rtarget / wheelTravel / gearRatio) * 360;
+    leftSpeedCap = Lspeed;
+    rightSpeedCap = Rspeed;
+    setMotorPos(LspinValue, RspinValue);
 }
 
 std::pair<turnType, double> determineTurnDirection(double currentHeading, double targetHeading)
@@ -196,7 +218,15 @@ int pidLoop()
             else if(controlSignalMotor1 < -driveSpeedCap) {controlSignalMotor1 = -driveSpeedCap;}
             if(controlSignalMotor2 > driveSpeedCap) {controlSignalMotor2 = driveSpeedCap;}
             else if(controlSignalMotor2 < -driveSpeedCap) {controlSignalMotor2 = -driveSpeedCap;}
-            
+        }
+        else if(turnANDdrive == 2)
+        {
+            controlSignalMotor1 = calculateControlSignal(targetLeftDrivePosition, currentMotor1Position, prevErrorMotor1, integralMotor1,KpDrive, KiDrive, KdDrive);
+            controlSignalMotor2 = calculateControlSignal(targetRightDrivePosition, currentMotor2Position, prevErrorMotor2, integralMotor2,KpDrive, KiDrive, KdDrive);
+            if(controlSignalMotor1 > driveSpeedCap) {controlSignalMotor1 = driveSpeedCap;}
+            else if(controlSignalMotor1 < -driveSpeedCap) {controlSignalMotor1 = -driveSpeedCap;}
+            if(controlSignalMotor2 > driveSpeedCap) {controlSignalMotor2 = driveSpeedCap;}
+            else if(controlSignalMotor2 < -driveSpeedCap) {controlSignalMotor2 = -driveSpeedCap;}
         }
         LeftDriveSmart.spin(forward, controlSignalMotor1, percent);
         RightDriveSmart.spin(forward, controlSignalMotor2, percent);
