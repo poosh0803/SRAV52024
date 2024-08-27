@@ -33,5 +33,8 @@ void autonPlanA()
     wait(1,sec);
     turn_to_heading(13);     //turn to hang bar
     drive_w_PID(reverse, 35, inches);        //touch the hang bar
+    // turn_to_heading(5);     //turn to hang bar
+    // drive_w_PID(reverse, 5, inches);        //touch the hang bar
+
     pid_Ends();
 }
