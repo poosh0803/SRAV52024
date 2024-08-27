@@ -7,6 +7,7 @@ using namespace vex;
 
 void autonPlanA()
 {
+    Controller1.Screen.print("Plan A");
     mogoGOUP();    //mogo clip spin up
     Imu.setHeading(0, degrees);
     pid_Init();

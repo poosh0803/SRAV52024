@@ -7,6 +7,7 @@ using namespace vex;
 
 void autonPlanB()
 {
+    Controller1.Screen.print("Plan B");
     mogoGOUP();   //mogo clip spin up
     Imu.setHeading(0, degrees);
     pid_Init();
@@ -33,4 +34,4 @@ void autonPlanB()
     turn_to_heading(347);     //turn to hang har
     drive_w_PID(reverse, 35, inches);        //touch the hang bar
     pid_Ends();
-}
+}   
