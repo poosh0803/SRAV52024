@@ -17,8 +17,8 @@ void autonomous(void)
 {
   // autonPlanA();
   // autonPlanB();
-  // autonPlanC();
-  autonPlanD();
+  autonPlanC();
+  // autonPlanD();
   // autonSkill();
 }
 void usercontrol(void)

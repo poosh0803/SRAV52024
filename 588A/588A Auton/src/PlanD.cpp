@@ -30,7 +30,7 @@ void autonPlanD()
     turn_to_heading(20);
     drive_w_PID(forward, 30, inches);
     turn_to_heading(315);
-    drive_w_PID(forward, 8, inches);
+    drive_w_PID(forward, 9, inches);
     Lift.spinToPosition(-580, degrees, false);
 
 
