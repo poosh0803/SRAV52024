@@ -20,8 +20,6 @@ extern motor Lift;
 extern inertial Imu;
 extern digital_out mogo;
 
-// extern bool connection[];
-// extern bool sensors[];
 
 void robot_init(void);
 void imu_init(void);
