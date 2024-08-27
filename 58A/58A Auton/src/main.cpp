@@ -15,8 +15,8 @@ using namespace vex;
 competition Competition;
 void autonomous(void)
 {
-  autonPlanA(); //Red Bot Slot 2
-  // autonPlanB(); //Red Top Slot 3
+  // autonPlanA(); //Red Bot Slot 2
+  autonPlanB(); //Red Top Slot 3
   // autonPlanC(); //Blue Bot Slot 4
   // autonPlanD(); //Blue Top Slot 5
   // autonSkill();

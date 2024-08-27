@@ -21,7 +21,7 @@ void autonPlanA()
     driveFor2(reverse, 4, inches); 
     mogo.set(true);
     driveFor2(forward, 4, inches);
-    turnToHeading2(275);
+    turnToHeading2(270);
     driveFor2(reverse, 16.5, inches);
     mogo.set(false);
     driveFor2(forward, 4, inches);
