@@ -74,7 +74,7 @@ void turn_w_PID(turnType dir, double target)
         setMotorPos(spinValue, -spinValue);
     }
 }
-void fancyCurve(double Ltarget, double Rtarget, vex::distanceUnits units,double Lspeed, double Rspeed)
+void driveFor3(double Ltarget, double Rtarget, vex::distanceUnits units, double Lspeed, double Rspeed)
 {
     turnANDdrive = 2;
     if(units == vex::distanceUnits::cm)
@@ -124,6 +124,10 @@ std::pair<turnType, double> determineTurnDirection(double currentHeading, double
 }
 void turnToHeading2(double targetHeading, double speed)
 {
+    if (targetHeading < 0) {
+        targetHeading = 360 - abs(targetHeading);
+    }
+
     turnSpeedCap = speed;
     turnANDdrive = 0;
     auto result = determineTurnDirection(Imu.heading(), targetHeading);
@@ -223,10 +227,10 @@ int pidLoop()
         {
             controlSignalMotor1 = calculateControlSignal(targetLeftDrivePosition, currentMotor1Position, prevErrorMotor1, integralMotor1,KpDrive, KiDrive, KdDrive);
             controlSignalMotor2 = calculateControlSignal(targetRightDrivePosition, currentMotor2Position, prevErrorMotor2, integralMotor2,KpDrive, KiDrive, KdDrive);
-            if(controlSignalMotor1 > driveSpeedCap) {controlSignalMotor1 = driveSpeedCap;}
-            else if(controlSignalMotor1 < -driveSpeedCap) {controlSignalMotor1 = -driveSpeedCap;}
-            if(controlSignalMotor2 > driveSpeedCap) {controlSignalMotor2 = driveSpeedCap;}
-            else if(controlSignalMotor2 < -driveSpeedCap) {controlSignalMotor2 = -driveSpeedCap;}
+            if(controlSignalMotor1 > leftSpeedCap) {controlSignalMotor1 = leftSpeedCap;}
+            else if(controlSignalMotor1 < -leftSpeedCap) {controlSignalMotor1 = -leftSpeedCap;}
+            if(controlSignalMotor2 > rightSpeedCap) {controlSignalMotor2 = rightSpeedCap;}
+            else if(controlSignalMotor2 < -rightSpeedCap) {controlSignalMotor2 = -rightSpeedCap;}
         }
         LeftDriveSmart.spin(forward, controlSignalMotor1, percent);
         RightDriveSmart.spin(forward, controlSignalMotor2, percent);
