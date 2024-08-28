@@ -22,14 +22,15 @@ void autonPlanA()
     mogo.set(true);
     driveFor2(forward, 4, inches);
     turnToHeading2(270);
-    driveFor2(reverse, 18.5, inches);
+    driveFor2(reverse, 16.5, inches);
     mogo.set(false);
     driveFor2(forward, 4, inches);
     Lift.spinToPosition(-720, degrees, false);
     turnToHeading2(340);
     driveFor2(forward, 30, inches);
     turnToHeading2(45);
-    driveFor2(forward, 5, inches);
+    driveFor2(forward, 8, inches);
+    Lift.spinToPosition(-580, degrees, false);
 
 
     pid_Ends();

@@ -7,6 +7,8 @@
 #include "v5_vcs.h"
 #include "PlanA.h"
 #include "PlanB.h"
+#include "PlanC.h"
+#include "PlanD.h"
 #include "PlanSkill.h"
 
 
