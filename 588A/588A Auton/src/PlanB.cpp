@@ -31,7 +31,7 @@ void autonPlanB()
     turn_to_heading(275);
     drive_w_PID(forward, 15, inches);    //intake 1 ring
     wait(1,sec);
-    turn_to_heading(347);     //turn to hang har
+    turn_to_heading(347);     //turn to hang bar
     drive_w_PID(reverse, 35, inches);        //touch the hang bar
     pid_Ends();
 }   
