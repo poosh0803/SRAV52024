@@ -8,7 +8,7 @@ void autonSkill()
 {
 
     mogoGOUP();
-    Imu.setHeading(270, degrees);
+    Imu.setHeading(135, degrees);
     pid_Init();
     drive_w_PID(reverse, 7, inches);
     mogoGODOWN();
