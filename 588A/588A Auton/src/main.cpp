@@ -15,11 +15,11 @@ using namespace vex;
 competition Competition;
 void autonomous(void)
 {
-  autonPlanA();
+  //autonPlanA();
   // autonPlanB();
   // autonPlanC();
   // autonPlanD();
-  // autonSkill();
+   autonSkill();
 }
 void usercontrol(void)
 {
