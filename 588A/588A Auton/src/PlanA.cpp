@@ -28,7 +28,7 @@ void autonPlanA()
     mogoGODOWN();       //clip mogo(go down)
 
     turn_to_heading(2);
-    drive_w_PID(forward, 24, inches);   //intake 1 ring
+    drive_w_PID(forward, 24.5, inches);   //intake 1 ring
     turn_to_heading(85);
     drive_w_PID(forward, 15, inches);    //intake 1 ring
     wait(1,sec);
