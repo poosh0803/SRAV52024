@@ -51,17 +51,11 @@ void intakeNONE()
 }
 void mogoUP()
 {
-    mogo.spinFor(forward, 360, degrees);
+    Clamp.set(true);
 }
 void mogoDOWN()
 {
-    mogo.spin(reverse);
-    wait(100,msec);
-    while(fabs(mogo.velocity(percent)) > 5)
-    {
-        wait(10,msec);
-    }
-    mogo.stop();
+    Clamp.set(false);
 }
 void liftUP()
 {
@@ -84,10 +78,10 @@ void controller_reg()
     Controller1.ButtonR2.released(intakeNONE);
     Controller1.ButtonL1.pressed(mogoUP);
     Controller1.ButtonL2.pressed(mogoDOWN);
-    Controller1.ButtonUp.pressed(liftUP);
-    Controller1.ButtonUp.released(liftNONE);
-    Controller1.ButtonDown.pressed(liftDOWN);
-    Controller1.ButtonDown.released(liftNONE);
+    // Controller1.ButtonUp.pressed(liftUP);
+    // Controller1.ButtonUp.released(liftNONE);
+    // Controller1.ButtonDown.pressed(liftDOWN);
+    // Controller1.ButtonDown.released(liftNONE);
 }
 
 void driveCode_Init()

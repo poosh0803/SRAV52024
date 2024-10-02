@@ -17,7 +17,7 @@ extern drivetrain Drivetrain;
 extern motor_group Intake;
 extern motor_group Lift;
 extern inertial Imu;
-extern motor mogo;
+extern digital_out Clamp;
 // extern bool connection[];
 // extern bool sensors[];
 void robot_init(void);
