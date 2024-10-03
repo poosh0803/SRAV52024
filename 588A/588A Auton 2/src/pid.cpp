@@ -34,7 +34,7 @@ const double KiDrive = 0.000;
 const double KdDrive = 0.35;
 const double timeStep = 10.0; // Time between each control loop update (in milliseconds)
 //Modify for turning
-const double veryCoolConstant = 2.2;
+const double veryCoolConstant = 2.29;
 //Modify for tolerance
 double tolerance = 15;
 //Set Motor Position
