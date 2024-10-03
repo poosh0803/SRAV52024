@@ -203,6 +203,32 @@ int pidLoop()
     }
     return 0;
 }
+bool isMogo()
+{
+    bool result = (mogoSensor.hue() > 60 && mogoSensor.hue() < 70);
+    return result;
+}
+double travelDist = 0;
+void mogoCorrection(bool direction, int limit)
+{
+  while(isMogo() == false && travelDist + 1 <= limit)
+  {
+    if (direction == true)
+    {
+        driveFor2(forward, 1, inches, 70);
+        travelDist += 1;
+    }
+    else
+    {
+        driveFor2(reverse, 1, inches, 70);
+        travelDist += 1;
+    }
+  }
+}
+double getTravelDist()
+{
+    return travelDist;
+}
 int debugMonitor()
 {
     while(true)

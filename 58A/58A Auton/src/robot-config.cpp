@@ -23,6 +23,7 @@ motor secondIntake = motor(PORT4, ratio18_1, false);
 motor_group Intake = motor_group(primaryIntake, secondIntake);
 motor Lift = motor(PORT17, ratio36_1, false);
 digital_out mogo = digital_out(Brain.ThreeWirePort.A);
+optical mogoSensor = optical(PORT11);
 
 void robot_init(void)
 {
@@ -40,7 +41,7 @@ void robot_init(void)
     Lift.setVelocity(80, percent);
     Lift.setStopping(hold);
     Lift.setPosition(0, degrees);
-
+    mogoSensor.setLightPower(100);
 
     printf("robot initialized\n");
 }
@@ -64,29 +65,3 @@ void imu_init(void)
     printf("Imu initialized\n");
 }
 
-// bool connection[] = {false, false, false, false, false, false, false, false}; //9
-// bool sensors[] = {false, false, false}; //Inertial, Resetter, Controller
-// void selfCheck()
-// {
-//   motor motors[] = {L1, L2, L3, R1, R2, R3, ShooterArm, Intake};
-//   for(int i=0; i<8; i++)
-//   {
-//     if(motors[i].installed())
-//     {
-//       connection[i] = true;
-//     }
-//   }
-//   if(Imu.installed())
-//   {
-//     sensors[0] = true;
-//   }
-//   if(ballDetecter.installed())
-//   {
-//     sensors[1] = true;
-//     ballDetecterEnabled = true;
-//   }
-//   if(Controller1.installed())
-//   {
-//     sensors[2] = true;
-//   }
-// }

@@ -12,26 +12,30 @@ void autonPlanC()
     Imu.setHeading(90,degrees);
     
     //Auton Start Here
-    driveFor2(reverse, 26, inches);
+    driveFor2(reverse, 26, inches, 50);
+    mogoCorrection(false, 10);
+
     mogo.set(false);
     wait(0.5, seconds);
+    driveFor2(forward, getTravelDist(), inches, 70);
     Intake.spin(forward);
     turnToHeading2(183);
-    driveFor2(forward, 24, inches);    
+    driveFor2(forward, 26, inches);
+    wait(3,sec);
+    // turnToHeading2(90);
+    // driveFor2(reverse, 4, inches); 
+    // mogo.set(true);
+    // driveFor2(forward, 4, inches);
+    // turnToHeading2(270);
+    // driveFor2(reverse, 16.5, inches);
+    // mogo.set(false);
+    // driveFor2(forward, 4, inches);
+    Lift.spinToPosition(-650, degrees, false);
     turnToHeading2(270);
-    driveFor2(reverse, 4, inches); 
-    mogo.set(true);
-    driveFor2(forward, 4, inches);
-    turnToHeading2(90);
-    driveFor2(reverse, 15, inches);
-    mogo.set(false);
-    driveFor2(forward, 4, inches);
-    Lift.spinToPosition(-720, degrees, false);
-    turnToHeading2(20);
-    driveFor2(forward, 30, inches);
-    turnToHeading2(315);
-    driveFor2(forward, 8, inches);
-    Lift.spinToPosition(-580, degrees, false);
+    driveFor2(forward, 10, inches);
+    turnToHeading2(350);
+    driveFor2(forward, 25, inches);
+    Lift.spinToPosition(-540, degrees, false);
 
 
     pid_Ends();
