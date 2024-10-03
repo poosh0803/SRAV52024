@@ -19,7 +19,7 @@ void autonomous(void)
   // autonPlanB();
   // autonPlanC();
   // autonPlanD();
-  // autonSkill();
+  //autonSkill();
 }
 void usercontrol(void)
 {
@@ -33,10 +33,7 @@ int main()
   robot_init();
   imu_init();
   display_init();
-  // Competition.autonomous(autonPlanA);
-  // Competition.autonomous(autonPlanB);
-  // Competition.autonomous(autonPlanC);
-  // Competition.autonomous(autonPlanD);
+  Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
   while (true) {
     wait(100, msec);
