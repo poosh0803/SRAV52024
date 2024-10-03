@@ -10,7 +10,8 @@
 #include "../include/vex.h"
 #include "../include/robot-config.h"
 #include "../include/display.h"
-#include "../include/driveCode.h"
+// #include "../include/driveCode.h"
+#include "../include/preAuton.h"
 using namespace vex;
 competition Competition;
 void autonomous(void)
@@ -22,10 +23,10 @@ void autonomous(void)
 
 void usercontrol(void)
 {
-  controllerReg();
-  while (1) {
-    wait(20, msec);
-  }
+  // controllerReg();
+  // while (1) {
+  //   wait(20, msec);
+  // }
 }
 
 int main()
