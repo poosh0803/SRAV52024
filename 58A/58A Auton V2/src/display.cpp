@@ -8,7 +8,6 @@ bool safeModeDis = true;
 void lines()
 {
     Brain.Screen.clearScreen();
-    Brain.Screen.drawImageFromFile("capybara.png", 0, 0);
     Brain.Screen.setPenColor(vex::color::white);
     Brain.Screen.setPenWidth(2);
     Brain.Screen.drawLine(0, 136, 240, 136);

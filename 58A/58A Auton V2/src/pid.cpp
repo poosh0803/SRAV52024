@@ -125,7 +125,7 @@ std::pair<turnType, double> determineTurnDirection(double currentHeading, double
 void turnToHeading2(double targetHeading, double speed)
 {
     if (targetHeading < 0) {
-        targetHeading = 360 - abs(targetHeading);
+        targetHeading = 360 - fabs(targetHeading);
     }
 
     turnSpeedCap = speed;

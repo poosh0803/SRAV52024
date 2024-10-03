@@ -1,5 +1,6 @@
 #include "vex.h"
 #include "vex_imu.h"
+#include "vex_motorgroup.h"
 #include "vex_triport.h"
 using namespace vex;
 extern brain Brain;
@@ -15,8 +16,8 @@ extern motor_group RightDriveSmart;
 extern drivetrain Drivetrain;
 extern motor primaryIntake;
 extern motor secondIntake;
-extern motor_group Intake;
-extern motor Lift;
+extern motor Intake;
+extern motor_group Lift;
 extern inertial Imu;
 extern digital_out mogo;
 extern optical mogoSensor;
