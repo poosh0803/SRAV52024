@@ -47,31 +47,19 @@ void clampToggle()
   }
 }
 
-void resetRamp()
+void rampToAllianceStake()
 {
-    Lift.setVelocity(200, percent);
-    Lift.spin(forward);
-    vex::wait(0.2, sec);
-    while (fabs(Lift.velocity(vex::velocityUnits::pct)) > 5) {
-        vex::wait(60, vex::timeUnits::msec);
-    }
-    Lift.stop();
-    Lift.setVelocity(80, percent);
+    Lift.spinToPosition(-390, degrees);
 }
 
-void rampUp()
+void rampToNeutralStake()
 {
-    Lift.spin(forward);
+    Lift.spinToPosition(-570, degrees);
 }
 
-void rampDown()
+void rampToIntakePos() 
 {
-    Lift.spin(reverse);
-}
-
-void rampStop() 
-{
-    Lift.stop();
+    Lift.spinToPosition(0, degrees);
 }
 
 int controller_loop()
@@ -110,51 +98,18 @@ int controller_loop()
         // Spin both motors in the forward direction.
         LeftDriveSmart.spin(forward);
         RightDriveSmart.spin(forward);
-        // if(fabs(Intake.current(amp)) > 2.5)
-        // {
-        //     Intake.stop();
-        //     fwdIntake = false;
-        // }
 
         wait(25, msec);
-    }
-}
-int intakeMonitor()
-{
-    while(true)
-    {
-        if(fwdIntake) 
-        {
-            wait(200,msec);
-            if(fabs(Intake.velocity(percent)) < 5)
-            {
-                Intake.stop();
-                fwdIntake = false;
-            }
-        }
-        else if(revToggle) 
-        {
-            wait(200,msec);
-            if(fabs(Intake.velocity(percent)) < 5)
-            {
-                Intake.stop();
-                revToggle = false;
-            }
-        }
-        wait(10,msec);
     }
 }
 
 void controllerReg()
 {
-    task intakeMonitorTask(intakeMonitor);
     task controllerLoopTask(controller_loop);
     Controller.ButtonL1.pressed(toggleIntakeFwd);
-    Controller.ButtonUp.released(rampStop);
-    Controller.ButtonDown.released(rampStop);
     Controller.ButtonL2.pressed(toggleIntakeRev);
-    Controller.ButtonUp.pressed(rampDown);
-    Controller.ButtonDown.pressed(rampUp);
+    Controller.ButtonUp.pressed(rampToAllianceStake);
+    Controller.ButtonDown.pressed(rampToNeutralStake);
     Controller.ButtonR1.pressed(clampToggle);
-    Controller.ButtonR2.pressed(resetRamp);
+    Controller.ButtonR2.pressed(rampToIntakePos);
 }

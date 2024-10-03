@@ -17,8 +17,8 @@ competition Competition;
 void autonomous(void)
 {
   // autonPlanA();
-  // autonPlanB();
-  autonSkill();
+  autonPlanD();
+  // autonSkill();
 }
 
 void usercontrol(void)

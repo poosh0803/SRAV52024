@@ -1,0 +1,29 @@
+#include "../include/vex.h"
+#include "../include/robot-config.h"
+#include "vex_global.h"
+#include "../include/pid.h"
+#include "../include/preAuton.h"
+using namespace vex;
+
+void autonPlanC()
+{
+    //Blue Side Right
+    pid_Init();
+    mogo.set(true);
+    Imu.setHeading(270,degrees);
+
+    driveFor2(reverse, 32, inches, 50);
+    mogoCorrection(false, 4);
+    mogo.set(false);
+    rollerStart();
+    turnToHeading2(0);
+    driveFor2(forward, 30, inches, 70);
+    wait(2, sec);
+    rollerEnd();
+
+    Lift.spinFor(-1300, degrees);
+    turnToHeading2(170);
+    driveFor2(forward, 40, inches, 50);
+    Lift.spinFor(580, degrees);
+    pid_Ends();
+}
