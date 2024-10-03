@@ -6,6 +6,7 @@ using namespace vex;
 
 void autonPlanD()
 {
+    Controller.Screen.print("Plan D");
     mogo.set(true);
     Imu.setHeading(180, degrees);
     pid_Init();
@@ -24,12 +25,12 @@ void autonPlanD()
     driveFor2(reverse, 31.5, inches, 70);
     mogo.set(false);
 
-    turnToHeading2(2);
+    turnToHeading2(359);
     driveFor2(forward, 24, inches);
-    turnToHeading2(275);
+    turnToHeading2(270);
     driveFor2(forward, 15, inches);
     wait(1,sec);
-    turnToHeading2(347);
+    turnToHeading2(0);
     driveFor2(reverse, 35, inches);
     pid_Ends();
-} 
+}

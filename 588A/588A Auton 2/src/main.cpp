@@ -15,21 +15,19 @@ using namespace vex;
 competition Competition;
 void autonomous(void)
 {
-  // autonPlanA(); //Red Bot Slot 2
-  // autonPlanB(); //Red Top Slot 3
-  // autonPlanC(); //Blue Bot Slot 4
-  autonPlanD(); //Blue Top Slot 5
-  // autonSkill();
+  autonPlanA();
+  // autonPlanB();
+  // autonPlanC();
+  // autonPlanD();
+  //autonSkill();
 }
-
 void usercontrol(void)
 {
-  controllerReg();
+  driveCode_Init();
   while (1) {
     wait(20, msec);
   }
 }
-
 int main()
 {
   robot_init();

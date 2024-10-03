@@ -4,12 +4,12 @@
 		"json": 2
 	},
 	"project": {
-		"name": "58A_Auton",
+		"name": "588A Auton",
 		"description": "Drivecode and PID Template",
 		"creationDate": "03/03/2024, 13:49:57",
 		"platform": "V5",
 		"language": "cpp",
-		"slot": 5,
+		"slot": 2,
 		"sdkVersion": "V5_20240223_11_00_00",
 		"cpp": {
 			"includePath": [],

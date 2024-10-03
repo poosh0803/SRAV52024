@@ -8,7 +8,7 @@ using namespace vex;
 void autonPlanA()
 {
     Controller1.Screen.print("Plan A");
-    mogoGOUP();    //mogo clip spin up
+    // clampUP();    //mogo clip spin up
     Imu.setHeading(0, degrees);
     pid_Init();
     drive_w_PID(reverse, 12, inches, 30);
@@ -25,7 +25,7 @@ void autonPlanA()
     Intake.spin(forward);
     turn_to_heading(226);
     drive_w_PID(reverse, 31, inches, 70);
-    mogoGODOWN();       //clip mogo(go down)
+    // clampDOWN();       //clip mogo(go down)
 
     turn_to_heading(2);
     drive_w_PID(forward, 24.5, inches);   //intake 1 ring
