@@ -35,6 +35,7 @@ void robot_init(void)
     Intake.setVelocity(100,percent);
     Lift.setMaxTorque(100,percent);
     Lift.setVelocity(100, percent);
+    Lift.setPosition(0, degrees);
     printf("robot initialized\n");
 }
 void imu_init(void)
@@ -55,11 +56,11 @@ void imu_init(void)
     // Controller1.rumble("..");
     printf("Imu initialized\n");
 }
-void clampUP()
+void mogoGOUP()
 {
     Clamp.set(true);
 }
-void clampDOWN()
+void mogoGODOWN()
 {
     Clamp.set(false);
 }
