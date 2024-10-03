@@ -18,6 +18,7 @@ extern motor_group Intake;
 extern motor_group Lift;
 extern inertial Imu;
 extern digital_out Clamp;
+extern digital_out trapDoor;
 // extern bool connection[];
 // extern bool sensors[];
 void robot_init(void);

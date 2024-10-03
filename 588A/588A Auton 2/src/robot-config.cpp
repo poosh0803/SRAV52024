@@ -5,6 +5,7 @@
 #include "vex_imu.h"
 #include "vex_motor.h"
 #include "vex_motorgroup.h"
+#include "vex_triport.h"
 using namespace vex;
 brain Brain;
 controller Controller1 = controller(primary);
@@ -24,6 +25,7 @@ digital_out Clamp = digital_out(Brain.ThreeWirePort.H);
 motor Lift1 = motor(PORT11, ratio36_1, true);//
 motor Lift2 = motor(PORT17, ratio36_1, false);//
 motor_group Lift = motor_group(Lift1, Lift2);//
+digital_out trapDoor = digital_out(Brain.ThreeWirePort.G);
 
 void robot_init(void)
 {
