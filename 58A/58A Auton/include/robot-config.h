@@ -19,6 +19,7 @@ extern motor_group Intake;
 extern motor Lift;
 extern inertial Imu;
 extern digital_out mogo;
+extern optical mogoSensor;
 
 
 void robot_init(void);

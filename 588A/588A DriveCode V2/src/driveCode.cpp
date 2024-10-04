@@ -5,6 +5,35 @@
 #include "vex_units.h"
 #include <cstdio>
 using namespace vex;
+int liftLimit = 1700;
+bool trapDoorStatues = false;
+void trapDoorCheck()
+{
+    if(Lift.position(degrees) > 720)
+    {
+        if(!trapDoorStatues)
+        {
+            trapDoor.set(true);
+            trapDoorStatues = true;
+        }
+    }
+    else
+    {
+        trapDoor.set(false);
+        trapDoorStatues = false;
+    }
+}
+void liftCheck()
+{
+    if(Lift.position(degrees) > liftLimit && Controller1.ButtonUp.pressing())
+    {
+        Lift.stop();
+    }
+    else if(Lift.position(degrees) < 0 && Controller1.ButtonDown.pressing())
+    {
+        Lift.stop();
+    }
+}
 int controllerLoop()
 {
     // Deadband stops the motors when Axis values are close to zero.
@@ -34,6 +63,8 @@ int controllerLoop()
         // Spin both motors in the forward direction.
         LeftDrive.spin(forward);
         RightDrive.spin(forward);
+        trapDoorCheck();
+        liftCheck();
         wait(10, msec);
     }
 }
@@ -51,17 +82,11 @@ void intakeNONE()
 }
 void mogoUP()
 {
-    mogo.spinFor(forward, 360, degrees);
+    Clamp.set(true);
 }
 void mogoDOWN()
 {
-    mogo.spin(reverse);
-    wait(100,msec);
-    while(fabs(mogo.velocity(percent)) > 5)
-    {
-        wait(10,msec);
-    }
-    mogo.stop();
+    Clamp.set(false);
 }
 void liftUP()
 {
@@ -76,6 +101,13 @@ void liftNONE()
 {
     Lift.stop();
 }
+int liftLock = 2;
+void liftUnlimit()
+{
+    if(liftLock > 0) {liftLock--; return;}
+    liftLimit = 1800;
+    Controller1.rumble("..");
+}
 void controller_reg()
 {
     Controller1.ButtonR1.pressed(intakeIN);
@@ -88,6 +120,7 @@ void controller_reg()
     Controller1.ButtonUp.released(liftNONE);
     Controller1.ButtonDown.pressed(liftDOWN);
     Controller1.ButtonDown.released(liftNONE);
+    Controller1.ButtonLeft.pressed(liftUnlimit);
 }
 
 void driveCode_Init()
