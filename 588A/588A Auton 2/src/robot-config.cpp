@@ -9,7 +9,7 @@ using namespace vex;
 brain Brain;
 controller Controller1 = controller(primary);
 motor L1 = motor(PORT9, ratio18_1, true);//
-motor L2 = motor(PORT10, ratio18_1, true);//
+motor L2 = motor(PORT8, ratio18_1, true);//
 motor L3 = motor(PORT2, ratio18_1, false);//
 motor R1 = motor(PORT16, ratio18_1, false);//
 motor R2 = motor(PORT6, ratio18_1, true);//
@@ -17,7 +17,7 @@ motor R3 = motor(PORT7, ratio18_1, false);//
 motor_group RightDrive = motor_group(R1, R2, R3);
 motor_group LeftDrive = motor_group(L1, L2, L3);
 drivetrain Drivetrain = drivetrain(LeftDrive, RightDrive, 320, 280, 241, mm);
-inertial Imu = inertial(PORT13);//
+inertial Imu = inertial(PORT14);//
 motor PrimaryIntake = motor(PORT15, ratio18_1, false);//
 motor_group Intake = motor_group(PrimaryIntake);//
 digital_out Clamp = digital_out(Brain.ThreeWirePort.H);
@@ -58,11 +58,11 @@ void imu_init(void)
 }
 void mogoGOUP()
 {
-    Clamp.set(true);
+    Clamp.set(false);
 }
 void mogoGODOWN()
 {
-    Clamp.set(false);
+    Clamp.set(true);
 }
 bool autoIntake = false;
 int intakeLoop()
