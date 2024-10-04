@@ -7,31 +7,50 @@ using namespace vex;
 
 void autonPlanB()
 {
+    Lift.spinToPosition(-100, degrees, false);       // NEED TO SHORTEN AUTON
+  
     Controller1.Screen.print("Plan B");
-    mogoGOUP();   //mogo clip spin up
-    Imu.setHeading(0, degrees);
+    mogoGOUP();    //mogo clip 
+    Imu.setHeading(180, degrees);
     pid_Init();
-    drive_w_PID(reverse, 12, inches, 30);
-    turn_to_heading(267, 20);
-    drive_w_PID(reverse, 3, inches, 30);
-    Intake.setVelocity(40,percent);
-    Intake.spin(forward);    //score preload
 
+    Lift.spinToPosition(850, degrees);
+    Lift.spinToPosition(1100, degrees, false);
+
+    setMotorPos(0, 353);   //7 if it doesnt work and switch the motor side ig? help need to test
+    drive_w_PID(forward, 3.4, inches);
+    
+    Lift.spinToPosition(850, degrees, false);
+    Lift.spinToPosition(0, degrees);
+    wait(0.001,sec);
+    drive_w_PID(reverse, 2, inches);
+    turn_to_heading(233);
+    
     wait(1,sec);
+    drive_w_PID(forward, 5, inches);
+    Intake.setVelocity(40,percent);
+    Intake.spin(reverse);
     Intake.stop();
-    drive_w_PID(forward, 10, inches);
+    drive_w_PID(forward, 4, inches);
     Intake.setVelocity(100,percent);
     Intake.spin(forward);
     turn_to_heading(134);
-    drive_w_PID(reverse, 31.5, inches, 70);
-    mogoGODOWN();   //clip mogo(go down)
+    drive_w_PID(reverse, 35, inches, 70);   //adjust less or more as needed
+    mogoGODOWN();       //clip mogo(go down)
+    wait(0.6,sec);
+
 
     turn_to_heading(358);
-    drive_w_PID(forward, 24, inches);  //intake 1 ring
+    drive_w_PID(forward, 24.5, inches);   //intake 1 ring
     turn_to_heading(275);
     drive_w_PID(forward, 15, inches);    //intake 1 ring
     wait(1,sec);
     turn_to_heading(347);     //turn to hang bar
-    drive_w_PID(reverse, 35, inches);        //touch the hang bar
+    wait(1,sec);
+    drive_w_PID(reverse, 35.2, inches);        //touch the hang bar NO TIME NEED TO SHORTEN
+    // turn_to_heading(5);     //turn to hang bar
+    // drive_w_PID(reverse, 5, inches);        //touch the hang bar
+
+
     pid_Ends();
-}   
+}

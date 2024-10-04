@@ -7,7 +7,7 @@ using namespace vex;
 
 void autonPlanA()
 {
-    Lift.spinToPosition(-100, degrees, false);
+    Lift.spinToPosition(-100, degrees, false);          // NEED TO SHORTEN AUTON
     
     Controller1.Screen.print("Plan A");
     mogoGOUP();    //mogo clip spin up
