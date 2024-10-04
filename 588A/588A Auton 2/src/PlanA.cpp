@@ -35,7 +35,7 @@ void autonPlanA()
     Intake.setVelocity(100,percent);
     Intake.spin(forward);
     turn_to_heading(226);
-    drive_w_PID(reverse, 35, inches, 70);
+    drive_w_PID(reverse, 35, inches, 70);   //adjust less or more as needed
     mogoGODOWN();       //clip mogo(go down)
     wait(0.6,sec);
 
