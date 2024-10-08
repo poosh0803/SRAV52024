@@ -18,6 +18,7 @@ void autonPlanA()
     Lift.spinToPosition(1100, degrees, false);
     drive_w_PID(reverse, 15, inches, 50);
     turn_to_heading(270);
+    turn_to_heading(270);
     drive_w_PID(forward, 5, inches, 50);
     Lift.spinToPosition(700, degrees);
     drive_w_PID(reverse, 6, inches, 50);
@@ -28,8 +29,15 @@ void autonPlanA()
     wait(500,msec);
     drive_w_PID(reverse, 5, inches, 50);
     turn_to_heading(5);
-    drive_w_PID(forward, 20, inches, 50);
-
+    intakeSTART();
+    drive_w_PID(forward, 28, inches, 50);
+    turn_to_heading(90);
+    turn_to_heading(90);
+    drive_w_PID(forward, 12, inches, 50);
+    wait(100,msec);
+    drive_w_PID(reverse, 5, inches, 30);
+    turn_to_heading(170);
+    drive_w_PID(forward, 22, inches, 70);
     // Lift.spinToPosition(1100, degrees, false);
 
     // setMotorPos(353, 0);   //350 if doesnt work
