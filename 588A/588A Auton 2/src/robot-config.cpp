@@ -10,7 +10,7 @@ using namespace vex;
 brain Brain;
 controller Controller1 = controller(primary);
 motor L1 = motor(PORT9, ratio18_1, true);//
-motor L2 = motor(PORT10, ratio18_1, true);//
+motor L2 = motor(PORT5, ratio18_1, true);//
 motor L3 = motor(PORT2, ratio18_1, false);//
 motor R1 = motor(PORT16, ratio18_1, false);//
 motor R2 = motor(PORT6, ratio18_1, true);//
