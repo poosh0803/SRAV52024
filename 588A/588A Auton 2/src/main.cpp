@@ -13,13 +13,14 @@
 #include "../include/driveCode.h"
 using namespace vex;
 competition Competition;
+char planSel = 'X';
 void autonomous(void)
 {
-  autonPlanA();
-  // autonPlanB();
-  // autonPlanC();
-  // autonPlanD();
-  //autonSkill();
+  // autonPlanA(); // Slot 1
+  // autonPlanB(); // Slot 2
+  // autonPlanC(); // Slot 3
+  // autonPlanD(); // Slot 4
+  //autonSkill(); // Slot 8
 }
 void usercontrol(void)
 {
@@ -30,11 +31,17 @@ void usercontrol(void)
 }
 int main()
 {
+  // Competition.autonomous(autonPlanA); planSel = 'A'; // Slot 1
+  Competition.autonomous(autonPlanB); planSel = 'B'; // Slot 2
+  // Competition.autonomous(autonPlanC); planSel = 'C'; // Slot 3
+  // Competition.autonomous(autonPlanD); planSel = 'D'; // Slot 4
+  // Competition.autonomous(autonSkill); planSel = 'S'; // Slot 8
+  Competition.drivercontrol(usercontrol);
+  Controller1.Screen.setCursor(3,1);
+  Controller1.Screen.print("Plan %c", planSel);
   robot_init();
   imu_init();
   display_init();
-  Competition.autonomous(autonomous);
-  Competition.drivercontrol(usercontrol);
   while (true) {
     wait(100, msec);
   }

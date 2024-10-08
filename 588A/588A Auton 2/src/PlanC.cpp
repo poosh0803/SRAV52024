@@ -6,7 +6,6 @@ using namespace vex;
 
 void autonPlanC()
 {
-    Controller1.Screen.print("Plan C");
     pid_Init();
     mogoGOUP();
     Imu.setHeading(270,degrees);
