@@ -23,6 +23,8 @@ extern digital_out trapDoor;
 extern vision::signature mogoStarboardCam__MOGO;
 extern vision mogoStarboardCam;
 
+extern vision::signature mogoPortCam__MOGO;
+extern vision mogoPortCam;
 
 // extern bool connection[];
 // extern bool sensors[];

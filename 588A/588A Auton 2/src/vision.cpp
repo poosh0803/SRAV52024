@@ -51,18 +51,21 @@ vex::vision::object * leftMostObject(std::vector<vex::vision::object *> visionOb
 
 double getMogoAngle() {
     mogoStarboardCam.takeSnapshot(mogoStarboardCam__MOGO);
+    mogoPortCam.takeSnapshot(mogoPortCam__MOGO);
 
     // Get the vision sensor object
-    vex::vision::object *mogo = rightMostObject(visionFilterHorizon(&mogoStarboardCam, 100));
+    vex::vision::object *mogoStarboard = rightMostObject(visionFilterHorizon(&mogoStarboardCam, 100));
+    vex::vision::object *mogoPort = leftMostObject(visionFilterHorizon(&mogoPortCam, 100));
 
     // If the mogo is not found, return 0 to maintain the current heading
-    if (mogo == NULL) {
+    if (mogoStarboard == NULL || mogoPort == NULL) {
         printf("Mogo not found\n");
         return 0;
     }
 
     // Calculate the angle to turn
-    return (mogo->centerX - 158) * 0.05;
+    // TODO: Tune the constant 15.0
+    return (mogoStarboard->centerX + mogoPort->centerX - 310.0) / 15.0;
 }
 
 }; // namespace Vision

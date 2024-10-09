@@ -34,8 +34,11 @@ motor_group Lift = motor_group(Lift1, Lift2);//
 digital_out trapDoor = digital_out(Brain.ThreeWirePort.G);
 digital_out Clamp = digital_out(Brain.ThreeWirePort.H);
 
-vision::signature mogoStarboardCam__MOGO (1, -2769, -1219, -1994, -7117, -5391, -6254, 2.900, 0);
+vision::signature mogoStarboardCam__MOGO = vision::signature(1, -2769, -1219, -1994, -7117, -5391, -6254, 2.900, 0);
 vex::vision mogoStarboardCam = vision( vex::PORT3, 26, mogoStarboardCam__MOGO);
+
+vision::signature mogoPortCam__MOGO = vision::signature(1, -2367, -1217, -1792, -6869, -5247, -6058, 4.8, 0);
+vex::vision mogoPortCam = vision(PORT20, 50, mogoPortCam__MOGO);
 
 void robot_init(void)
 {
