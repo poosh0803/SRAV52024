@@ -1,5 +1,6 @@
 #include "../include/vex.h"
 #include "../include/robot-config.h"
+#include "../include/vision.h"
 #include "vex_global.h"
 #include "vex_task.h"
 #include "vex_units.h"
@@ -16,6 +17,8 @@ double turnSpeedCap = 100;
 // Target positions for each motor (adjust these based on your task)
 double targetLeftDrivePosition = 0;
 double targetRightDrivePosition = 0;
+// Game object tracking
+bool mogoTracking = false;
 // Variables for PID control
 double prevErrorMotor1 = 0.0;
 double integralMotor1 = 0.0;
@@ -57,6 +60,7 @@ void setMotorPos(double Left, double Right)
         wait(20,msec);
     }
     printf("Done in %.2f sec\n", Brain.Timer.value() - startTime);
+    mogoTracking = false;
 }
 
 void turn_w_PID(turnType dir, double target)
@@ -134,10 +138,11 @@ void drive_for_time(directionType direction, double timeLength)
     wait(timeLength, seconds);
     setMotorPos(0, 0);
 }
-void drive_w_PID(directionType dir, double target, distanceUnits units, double speed)
+void drive_w_PID(directionType dir, double target, distanceUnits units, double speed, bool trackingMogo)
 {
     driveSpeedCap = speed;
     turnANDdrive = 1;
+    mogoTracking = trackingMogo;
     if(units == vex::distanceUnits::cm)
     {
         target = target * 10;
@@ -175,6 +180,8 @@ int pidLoop()
     double controlSignalMotor2;
     double currentMotor1Position;
     double currentMotor2Position;
+    double mogoAngle, mogoAnglePrev;
+
     while (pidEnabled)
     {
         currentMotor1Position = LeftDrive.position(degrees);
@@ -192,11 +199,23 @@ int pidLoop()
         {
             controlSignalMotor1 = calculateControlSignal(targetLeftDrivePosition, currentMotor1Position, prevErrorMotor1, integralMotor1,KpDrive, KiDrive, KdDrive);
             controlSignalMotor2 = calculateControlSignal(targetRightDrivePosition, currentMotor2Position, prevErrorMotor2, integralMotor2,KpDrive, KiDrive, KdDrive);
+
             if(controlSignalMotor1 > driveSpeedCap) {controlSignalMotor1 = driveSpeedCap;}
             else if(controlSignalMotor1 < -driveSpeedCap) {controlSignalMotor1 = -driveSpeedCap;}
             if(controlSignalMotor2 > driveSpeedCap) {controlSignalMotor2 = driveSpeedCap;}
             else if(controlSignalMotor2 < -driveSpeedCap) {controlSignalMotor2 = -driveSpeedCap;}
             
+            // Mogo tracking
+            if (mogoTracking) {
+                mogoAngle = Vision::getMogoAngle();
+
+                if (mogoAngle != 0) {
+                    mogoAnglePrev = mogoAngle;
+                    controlSignalMotor1 += mogoAnglePrev;
+                    controlSignalMotor2 -= mogoAnglePrev;
+                }
+
+            }
         }
         LeftDrive.spin(forward, controlSignalMotor1, percent);
         RightDrive.spin(forward, controlSignalMotor2, percent);

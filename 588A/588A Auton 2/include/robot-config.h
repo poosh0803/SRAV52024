@@ -19,6 +19,11 @@ extern motor_group Lift;
 extern inertial Imu;
 extern digital_out Clamp;
 extern digital_out trapDoor;
+
+extern vision::signature mogoStarboardCam__MOGO;
+extern vision mogoStarboardCam;
+
+
 // extern bool connection[];
 // extern bool sensors[];
 void robot_init(void);
