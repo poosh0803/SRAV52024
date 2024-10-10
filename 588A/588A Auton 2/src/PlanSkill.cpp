@@ -2,10 +2,12 @@
 #include "../include/robot-config.h"
 #include "vex_global.h"
 #include "../include/pid.h"
+#include "../include/logger.h"
 using namespace vex;
 
 void autonSkill()
-{
+{   
+    logVal(LOG_INFO, "Skill Start");
     //Init
     mogoGOUP();
     Imu.setHeading(90, degrees);
@@ -40,9 +42,9 @@ void autonSkill()
 
     //Reset
     wait(300,msec);
-    curveDrive(24, 6, inches, 50, 12.5);
-    turn_to_heading(0);
-    drive_w_PID(reverse, 77, inches, 60);
+    curveDrive(24, 6, inches, 75, 18.75);
+    turn_to_heading(0, 100);
+    drive_w_PID(reverse, 74, inches, 80, true);
 
     //mogo
     mogoGODOWN();
