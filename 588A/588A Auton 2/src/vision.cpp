@@ -1,13 +1,21 @@
 #include "../include/vex.h"
 #include "../include/robot-config.h"
+#include "../include/vision.h"
+#include "../include/logger.h"
+#include "../include/pid.h"
 #include "vex_global.h"
 #include "vex_task.h"
 #include "vex_units.h"
 #include <cmath>
 #include <vector>
-#include "pid.h"
 
 namespace Vision {
+
+int mogoTrackStatus = LOST;
+double lastMogoTime = 0;
+
+vex::vision::object *prevMogoStarboard = NULL;
+vex::vision::object *prevMogoPort = NULL;
 
 std::vector<vex::vision::object *> visionFilterHorizon(vex::vision *visionSensor, uint16_t horizon) {
     std::vector<vex::vision::object *> visionObjects;
@@ -55,17 +63,31 @@ double getMogoAngle() {
 
     // Get the vision sensor object
     vex::vision::object *mogoStarboard = rightMostObject(visionFilterHorizon(&mogoStarboardCam, 100));
-    vex::vision::object *mogoPort = leftMostObject(visionFilterHorizon(&mogoPortCam, 100));
+    vex::vision::object *mogoPort = rightMostObject(visionFilterHorizon(&mogoPortCam, 100));
 
-    // If the mogo is not found, return 0 to maintain the current heading
+    // If the mogo detection stale, continue to use the previous data until it is >0.5s old
     if (mogoStarboard == NULL || mogoPort == NULL) {
-        printf("Mogo not found\n");
-        return 0;
+        if (Brain.Timer.value() - lastMogoTime > staleTime) {
+            mogoTrackStatus = LOST;
+            return 0;
+        } else {
+            mogoTrackStatus = STALE;
+            mogoStarboard == NULL ? mogoStarboard = prevMogoStarboard : mogoStarboard;
+            mogoPort == NULL ? mogoPort = prevMogoPort : mogoPort;
+        }
+    } else {
+        mogoTrackStatus = TRACKING;
+        lastMogoTime = Brain.Timer.value();
     }
+
 
     // Calculate the angle to turn
     // TODO: Tune the constant 15.0
-    return (mogoStarboard->centerX + mogoPort->centerX - 310.0) / 15.0;
+    if (mogoStarboard != NULL && mogoPort != NULL) {
+        return (mogoStarboard->centerX + mogoPort->centerX - center) * visionKP;
+    }
+    
+    return 0;
 }
 
 }; // namespace Vision

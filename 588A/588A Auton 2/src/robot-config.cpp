@@ -1,4 +1,5 @@
 #include "../include/vex.h"
+#include "../include/robot-config.h"
 #include "vex_controller.h"
 #include "vex_drivetrain.h"
 #include "vex_global.h"
@@ -38,7 +39,7 @@ vision::signature mogoStarboardCam__MOGO = vision::signature(1, -2769, -1219, -1
 vex::vision mogoStarboardCam = vision( vex::PORT3, 26, mogoStarboardCam__MOGO);
 
 vision::signature mogoPortCam__MOGO = vision::signature(1, -2367, -1217, -1792, -6869, -5247, -6058, 4.8, 0);
-vex::vision mogoPortCam = vision(PORT20, 50, mogoPortCam__MOGO);
+vex::vision mogoPortCam = vision(PORT4, 50, mogoPortCam__MOGO);
 
 void robot_init(void)
 {
@@ -51,7 +52,7 @@ void robot_init(void)
     Lift.setMaxTorque(100,percent);
     Lift.setVelocity(100, percent);
     Lift.setPosition(0, degrees);
-    printf("robot initialized\n");
+    printf("%srobot initialized%s\n", MGTA_BG, NORM);
 }
 void imu_init(void)
 {
@@ -69,7 +70,7 @@ void imu_init(void)
     Brain.Screen.clearScreen();
     Brain.Screen.setCursor(1,1);
     // Controller1.rumble("..");
-    printf("Imu initialized\n");
+    printf("%sImu initialized%s\n", MGTA_BG, NORM);
 }
 void mogoGOUP()
 {

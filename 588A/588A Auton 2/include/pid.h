@@ -1,3 +1,6 @@
+extern double staleTime;
+extern double center;
+extern double visionKP;
 
 void pid_Init();
 void pid_Ends();

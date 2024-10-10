@@ -1,12 +1,14 @@
 #include "../include/vex.h"
 #include "../include/robot-config.h"
 #include "../include/vision.h"
+#include "../include/logger.h"
 #include "vex_global.h"
 #include "vex_task.h"
 #include "vex_units.h"
 #include <cstdio>
 #include <cmath>
 #include <utility>
+
 using namespace vex;
 int turnANDdrive = 0;
 bool pidEnabled = false;
@@ -19,6 +21,11 @@ double targetLeftDrivePosition = 0;
 double targetRightDrivePosition = 0;
 // Game object tracking
 bool mogoTracking = false;
+bool mogoFound = false;
+double staleTime = 0.3;
+double center = 315.0;
+double visionKP = 0.075;
+double startTime = Brain.Timer.value();
 // Variables for PID control
 double prevErrorMotor1 = 0.0;
 double integralMotor1 = 0.0;
@@ -47,7 +54,6 @@ void printPosition(double L, double R)
 }
 void setMotorPos(double Left, double Right)
 {
-    double startTime = Brain.Timer.value();
     integralMotor1 = 0.0;
     integralMotor2 = 0.0;
     LeftDrive.setPosition(0, degrees);
@@ -59,7 +65,8 @@ void setMotorPos(double Left, double Right)
         // printPosition(targetLeftDrivePosition,targetRightDrivePosition);
         wait(20,msec);
     }
-    printf("Done in %.2f sec\n", Brain.Timer.value() - startTime);
+
+    logVal(LOG_DEBUG, "Done in ", Brain.Timer.value() - startTime);
     mogoTracking = false;
 }
 
@@ -225,9 +232,22 @@ int pidLoop()
 }
 int debugMonitor()
 {
+    int prevMogoTrackStatus = Vision::LOST;
     while(true)
     {
-        printf("Heading: %.2f\n", (float)Imu.heading(degrees));
+        logVal(LOG_INFO, "Heading: ", (double)Imu.heading(degrees));
+
+        if (Vision::mogoTrackStatus == Vision::TRACKING && prevMogoTrackStatus != Vision::mogoTrackStatus) {
+            logVal(LOG_DEBUG, "Mogo tracking");
+            prevMogoTrackStatus = Vision::mogoTrackStatus;
+        } else if (Vision::mogoTrackStatus == Vision::STALE && prevMogoTrackStatus != Vision::mogoTrackStatus) {
+            logVal(LOG_WARNING, "Mogo stale");
+            prevMogoTrackStatus = Vision::mogoTrackStatus;
+        } else if (Vision::mogoTrackStatus == Vision::LOST && prevMogoTrackStatus != Vision::mogoTrackStatus) {
+            logVal(LOG_ERROR, "Mogo lost");
+            prevMogoTrackStatus = Vision::mogoTrackStatus;
+        }
+
         wait(50,msec);
     }
 }
