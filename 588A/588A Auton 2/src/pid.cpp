@@ -269,17 +269,18 @@ int debugMonitor()
     {
         logVal(LOG_INFO, "Heading: ", (double)Imu.heading(degrees));
 
-        if (Vision::mogoTrackStatus == Vision::TRACKING && prevMogoTrackStatus != Vision::mogoTrackStatus) {
-            logVal(LOG_DEBUG, "Mogo tracking");
-            prevMogoTrackStatus = Vision::mogoTrackStatus;
-        } else if (Vision::mogoTrackStatus == Vision::STALE && prevMogoTrackStatus != Vision::mogoTrackStatus) {
-            logVal(LOG_WARNING, "Mogo stale");
-            prevMogoTrackStatus = Vision::mogoTrackStatus;
-        } else if (Vision::mogoTrackStatus == Vision::LOST && prevMogoTrackStatus != Vision::mogoTrackStatus) {
-            logVal(LOG_ERROR, "Mogo lost");
-            prevMogoTrackStatus = Vision::mogoTrackStatus;
+        if (mogoTracking) {
+            if (Vision::mogoTrackStatus == Vision::TRACKING && prevMogoTrackStatus != Vision::mogoTrackStatus) {
+                logVal(LOG_DEBUG, "Mogo tracking");
+                prevMogoTrackStatus = Vision::mogoTrackStatus;
+            } else if (Vision::mogoTrackStatus == Vision::STALE && prevMogoTrackStatus != Vision::mogoTrackStatus) {
+                logVal(LOG_WARNING, "Mogo stale");
+                prevMogoTrackStatus = Vision::mogoTrackStatus;
+            } else if (Vision::mogoTrackStatus == Vision::LOST && prevMogoTrackStatus != Vision::mogoTrackStatus) {
+                logVal(LOG_ERROR, "Mogo lost");
+                prevMogoTrackStatus = Vision::mogoTrackStatus;
+            }
         }
-
         wait(50,msec);
     }
 }
