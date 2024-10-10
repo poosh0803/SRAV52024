@@ -15,6 +15,7 @@ std::vector <vex::vision::object *> visionFilterHorizon(vex::vision *visionSenso
 vex::vision::object * rightMostObject(std::vector<vex::vision::object *> visionObjects);
 vex::vision::object * leftMostObject(std::vector<vex::vision::object *> visionObjects);
 double getMogoAngle();
+void testVision();
 
 }; // namespace Vision
 

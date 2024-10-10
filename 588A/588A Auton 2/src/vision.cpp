@@ -90,4 +90,13 @@ double getMogoAngle() {
     return 0;
 }
 
+void testVision() {
+    Imu.setHeading(0, degrees);
+    pid_Init();
+    mogoGOUP();
+
+    drive_w_PID(reverse, 100, inches, 80, true);
+    mogoGODOWN();
+}
+
 }; // namespace Vision

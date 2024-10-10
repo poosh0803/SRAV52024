@@ -6,40 +6,65 @@ using namespace vex;
 
 void autonSkill()
 {
-
+    //Init
     mogoGOUP();
-    Imu.setHeading(303, degrees);
+    Imu.setHeading(90, degrees);
     pid_Init();
-    drive_w_PID(reverse, 8, inches);
-    mogoGODOWN();               //clip goal
-    turn_to_heading(90);
-    intakeSTART();
-    drive_w_PID(forward, 27, inches);     //first ring
-    turn_to_heading(357);
-    drive_w_PID(forward, 24, inches);     ///second ring
-    turn_to_heading(265);
-    drive_w_PID(forward, 20, inches, 40);     //thrid ring
-    drive_w_PID(forward, 6, inches, 30);// fourth ring
-    wait(2,sec);
-    drive_w_PID(forward, 10, inches, 40);
-    wait(1,sec);
-    drive_w_PID(reverse, 24, inches);   //5th ring
-    turn_to_heading(315);
-    drive_w_PID(forward, 15, inches);      // sixth ring
-    wait(2,sec);
 
-    turn_to_heading(110);
-    drive_w_PID(reverse, 10, inches);    //go to goal
-    mogoGOUP();      
-    wait(0.5,sec);
-    drive_w_PID(forward,7, inches);
-    turn_to_heading(355);
-    drive_w_PID(reverse, 74.5, inches);
-    mogoGODOWN();    ///clip goal
-    drive_w_PID(reverse, 8, inches);     //drive to ring
-    turn_to_heading(90);               //drive to second ring of right side
-    drive_w_PID(forward, 25, inches);     // try to 2nd intake ring
-    turn_to_heading(185);
+    //Wall Stake + mogo
+    Intake.spinFor(forward, 720, degrees);
+    Intake.spinFor(reverse, 180, degrees);
+    drive_w_PID(forward, 14, inches, 50);
+    turn_to_heading(180);
+    drive_w_PID(reverse, 24, inches, 50);  
+    mogoGODOWN();
+
+    //Rings
+    intakeSTART();
+    turn_to_heading(90);
     drive_w_PID(forward, 24, inches);
-    turn_to_heading(265);
+    turn_to_heading(0);
+    drive_w_PID(forward, 24, inches);
+    turn_to_heading(270);
+    drive_w_PID(forward, 24, inches);
+    drive_w_PID(forward, 12, inches);
+    drive_w_PID(reverse, 36, inches);
+    turn_to_heading(305);
+    drive_w_PID(forward, 20, inches);
+    turn_to_heading(105);
+    turn_to_heading(105);
+    drive_w_PID(reverse, 16, inches);
+    mogoGOUP();
+    intakeSTOP();
+    Intake.spinFor(reverse, 180, degrees);
+
+    //Reset
+    wait(300,msec);
+    curveDrive(24, 6, inches, 50, 12.5);
+    turn_to_heading(0);
+    drive_w_PID(reverse, 77, inches, 60);
+
+    //mogo
+    mogoGODOWN();
+    intakeSTART();
+    turn_to_heading(90);
+    drive_w_PID(forward, 18, inches);
+    turn_to_heading(180);
+    drive_w_PID(forward, 24, inches);
+    turn_to_heading(270);
+    drive_w_PID(forward, 24, inches);
+    drive_w_PID(forward, 12, inches);
+    drive_w_PID(reverse, 36, inches);
+    turn_to_heading(215);
+    drive_w_PID(forward, 20, inches);
+    turn_to_heading(25);
+    drive_w_PID(reverse, 16, inches);
+    mogoGOUP();
+    intakeSTOP();
+    Intake.spinFor(reverse, 180, degrees);
+
+    //Endgame
+    Lift.spinToPosition(1700,degrees,false);
+    turn_to_heading(45);
+    drive_w_PID(forward, 60, inches);
 }
