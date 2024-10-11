@@ -1,5 +1,6 @@
 #include "../include/vex.h"
 #include "../include/robot-config.h"
+#include "../include/logger.h"
 #include "vex_controller.h"
 #include "vex_drivetrain.h"
 #include "vex_global.h"
@@ -52,7 +53,7 @@ void robot_init(void)
     Lift.setMaxTorque(100,percent);
     Lift.setVelocity(100, percent);
     Lift.setPosition(0, degrees);
-    printf("%srobot initialized%s\n", MGTA_BG, NORM);
+    logVal(LOG_INFO, "%srobot initialized%s\n");
 }
 void imu_init(void)
 {
@@ -70,7 +71,7 @@ void imu_init(void)
     Brain.Screen.clearScreen();
     Brain.Screen.setCursor(1,1);
     // Controller1.rumble("..");
-    printf("%sImu initialized%s\n", MGTA_BG, NORM);
+    logVal(LOG_INFO, "%sImu initialized%s\n");
 }
 void mogoGOUP()
 {
