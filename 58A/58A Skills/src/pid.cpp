@@ -1,11 +1,14 @@
 #include "../include/vex.h"
 #include "../include/robot-config.h"
+#include "../include/vision.h"
+#include "../include/logger.h"
 #include "vex_global.h"
 #include "vex_task.h"
 #include "vex_units.h"
 #include <cstdio>
 #include <cmath>
 #include <utility>
+
 using namespace vex;
 int turnANDdrive = 0;
 bool pidEnabled = false;
@@ -18,6 +21,13 @@ double rightSpeedCap = 100;
 // Target positions for each motor (adjust these based on your task)
 double targetLeftDrivePosition = 0;
 double targetRightDrivePosition = 0;
+// Game object tracking
+bool mogoTracking = false;
+bool mogoFound = false;
+double staleTime = 0.3;
+double center = 315.0;
+double visionKP = 0.075;
+double startTime = Brain.Timer.value();
 // Variables for PID control
 double prevErrorMotor1 = 0.0;
 double integralMotor1 = 0.0;
@@ -125,7 +135,7 @@ std::pair<turnType, double> determineTurnDirection(double currentHeading, double
 void turnToHeading2(double targetHeading, double speed)
 {
     if (targetHeading < 0) {
-        targetHeading = 360 - abs(targetHeading);
+        targetHeading = 360 - std::abs(targetHeading);
     }
 
     turnSpeedCap = speed;
@@ -160,10 +170,11 @@ void drive_for_time(directionType direction, double timeLength)
     wait(timeLength, seconds);
     setMotorPos(0, 0);
 }
-void driveFor2(directionType dir, double target, distanceUnits units, double speed)
+void driveFor2(directionType dir, double target, distanceUnits units, double speed, bool trackingMogo)
 {
     driveSpeedCap = speed;
     turnANDdrive = 1;
+    mogoTracking = trackingMogo;
     if(units == vex::distanceUnits::cm)
     {
         target = target * 10;
@@ -201,6 +212,8 @@ int pidLoop()
     double controlSignalMotor2;
     double currentMotor1Position;
     double currentMotor2Position;
+    double mogoAngle, mogoAnglePrev;
+
     while (pidEnabled)
     {
         currentMotor1Position = LeftDriveSmart.position(degrees);
@@ -222,6 +235,18 @@ int pidLoop()
             else if(controlSignalMotor1 < -driveSpeedCap) {controlSignalMotor1 = -driveSpeedCap;}
             if(controlSignalMotor2 > driveSpeedCap) {controlSignalMotor2 = driveSpeedCap;}
             else if(controlSignalMotor2 < -driveSpeedCap) {controlSignalMotor2 = -driveSpeedCap;}
+            
+            // Mogo tracking
+            if (mogoTracking) {
+                mogoAngle = Vision::getMogoAngle();
+
+                if (mogoAngle != 0) {
+                    mogoAnglePrev = mogoAngle;
+                    controlSignalMotor1 += mogoAnglePrev;
+                    controlSignalMotor2 -= mogoAnglePrev;
+                }
+
+            }
         }
         else if(turnANDdrive == 2)
         {
@@ -240,9 +265,23 @@ int pidLoop()
 }
 int debugMonitor()
 {
+    int prevMogoTrackStatus = Vision::LOST;
     while(true)
     {
-        printf("Heading: %.2f\n", (float)Imu.heading(degrees));
+        logVal(LOG_INFO, "Heading: ", (double)Imu.heading(degrees));
+
+        if (mogoTracking) {
+            if (Vision::mogoTrackStatus == Vision::TRACKING && prevMogoTrackStatus != Vision::mogoTrackStatus) {
+                logVal(LOG_DEBUG, "Mogo tracking");
+                prevMogoTrackStatus = Vision::mogoTrackStatus;
+            } else if (Vision::mogoTrackStatus == Vision::STALE && prevMogoTrackStatus != Vision::mogoTrackStatus) {
+                logVal(LOG_WARNING, "Mogo stale");
+                prevMogoTrackStatus = Vision::mogoTrackStatus;
+            } else if (Vision::mogoTrackStatus == Vision::LOST && prevMogoTrackStatus != Vision::mogoTrackStatus) {
+                logVal(LOG_ERROR, "Mogo lost");
+                prevMogoTrackStatus = Vision::mogoTrackStatus;
+            }
+        }
         wait(50,msec);
     }
 }

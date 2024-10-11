@@ -1,13 +1,17 @@
 #include "../include/vex.h"
+#include "../include/logger.h"
 #include "vex_controller.h"
 #include "vex_drivetrain.h"
 #include "vex_global.h"
 #include "vex_imu.h"
 #include "vex_motor.h"
 #include "vex_motorgroup.h"
+
 using namespace vex;
+
 brain Brain;
 controller Controller = controller(primary);
+
 motor L1 = motor(PORT19, ratio6_1, true);
 motor L2 = motor(PORT20, ratio6_1, false);
 motor L3 = motor(PORT18, ratio6_1, true);
@@ -17,13 +21,24 @@ motor R3 = motor(PORT14, ratio6_1, false);
 motor_group RightDriveSmart = motor_group(R1, R2, R3);
 motor_group LeftDriveSmart = motor_group(L1, L2, L3);
 drivetrain Drivetrain = drivetrain(LeftDriveSmart, RightDriveSmart, 320, 280, 241, mm, 48.0/84.0);
+
 inertial Imu = inertial(PORT4);
+
 motor primaryIntake = motor(PORT3, ratio18_1, false);
 motor secondIntake = motor(PORT4, ratio18_1, false);
 motor_group Intake = motor_group(primaryIntake, secondIntake);
+
 motor Lift = motor(PORT17, ratio18_1, false);
+
 digital_out mogo = digital_out(Brain.ThreeWirePort.A);
 optical mogoSensor = optical(PORT11);
+
+// Use the correct ports and signature for your robot
+vision::signature mogoStarboardCam__MOGO = vision::signature(1, -2769, -1219, -1994, -7117, -5391, -6254, 2.900, 0);
+vex::vision mogoStarboardCam = vision(vex::PORT3, 26, mogoStarboardCam__MOGO);
+
+vision::signature mogoPortCam__MOGO = vision::signature(1, -2367, -1217, -1792, -6869, -5247, -6058, 4.8, 0);
+vex::vision mogoPortCam = vision(PORT4, 50, mogoPortCam__MOGO);
 
 void robot_init(void)
 {
@@ -44,7 +59,7 @@ void robot_init(void)
     
     mogoSensor.setLightPower(100);
 
-    printf("robot initialized\n");
+    logVal(LOG_INFO, "robot initialized\n");
 }
 
 void imu_init(void)
@@ -63,7 +78,7 @@ void imu_init(void)
     Brain.Screen.clearScreen();
     Brain.Screen.setCursor(1,1);
     // Controller1.rumble("..");
-    printf("Imu initialized\n");
+    logVal(LOG_INFO, "Imu initialized\n");
 }
 
 // bool connection[] = {false, false, false, false, false, false, false, false}; //9

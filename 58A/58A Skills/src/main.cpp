@@ -12,6 +12,7 @@
 #include "../include/display.h"
 // #include "../include/driveCode.h"
 #include "../include/preAuton.h"
+#include "../include/vision.h"
 using namespace vex;
 competition Competition;
 void autonomous(void)
@@ -31,10 +32,13 @@ void usercontrol(void)
 
 int main()
 {
+  printf("\033[2J");
   robot_init();
   imu_init();
   display_init();
   Competition.autonomous(autonomous);
+//   Uncomment to test mogo tracking with vision sensors
+//   Competition.autonomous(Vision::testVision);
   Competition.drivercontrol(usercontrol);
   while (true) {
     wait(100, msec);

@@ -27,10 +27,10 @@ void Stage0()
     rollerEnd();
     driveFor2(forward, 12, inches, 70);
     turnToHeading2(0);
-    driveFor2(reverse, 20, inches, 50);
+    driveFor2(reverse, 20, inches, 80, true);
     mogoCorrection(false, 4);
-
 }
+
 void Stage1()
 {
     //Goal 1
@@ -80,11 +80,18 @@ void Stage2()
 {
     //Transtion Goal 1 - Goal 2
     driveFor2(fwd, 3, inches, 71);
-    turnToHeading2(180, 70);
-    wait(0.1, sec);
-    driveFor2(reverse, 36, inches, 71);
-    turnToHeading2(180, 70);
-    driveFor2(reverse, 36, inches, 71);
+
+    // Replace the turn to heading halfway with Vision sensor tracking
+    // We can drive faster since we are actively tracking the mogo
+
+    // turnToHeading2(180, 70);
+    // wait(0.1, sec);
+    // driveFor2(reverse, 36, inches, 71);
+    // turnToHeading2(180, 70);
+    // driveFor2(reverse, 36, inches, 71);
+
+    driveFor2(reverse, 72, inches, 80, true);
+
     mogoCorrection();
     mogo.set(false);
 
@@ -122,5 +129,4 @@ void Stage2()
     driveFor2(reverse, 20, inches, 81);
     mogo.set(true);
     rollerEnd();
-
 }
