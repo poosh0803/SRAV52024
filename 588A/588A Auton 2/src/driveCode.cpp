@@ -101,8 +101,8 @@ void controller_reg()
     Controller1.ButtonL2.pressed(mogoDOWN);
     Controller1.ButtonRight.pressed(liftUP);
     Controller1.ButtonRight.released(liftNONE);
-    Controller1.ButtonY.pressed(liftDOWN);
-    Controller1.ButtonY.released(liftNONE);
+    Controller1.ButtonDown.pressed(liftDOWN);
+    Controller1.ButtonB.released(liftNONE);
     Controller1.ButtonLeft.pressed(liftUnlimit);
 }
 
