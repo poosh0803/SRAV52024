@@ -5,7 +5,8 @@ void logVal(loggerLevel level, const char* message, double data) {
     logVal(level, message, &data);
 }
 
-void logVal(loggerLevel level, const char* message, double* data) {
+void logVal(loggerLevel level, const char* message, double* data) 
+{
     const char* levelStr;
     const char* levelMsg;
 

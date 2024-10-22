@@ -6,23 +6,6 @@
 #include <cstdio>
 using namespace vex;
 int liftLimit = 1700;
-bool trapDoorStatues = false;
-void trapDoorCheck()
-{
-    if(Lift.position(degrees) > 720)
-    {
-        if(!trapDoorStatues)
-        {
-            trapDoor.set(true);
-            trapDoorStatues = true;
-        }
-    }
-    else
-    {
-        trapDoor.set(false);
-        trapDoorStatues = false;
-    }
-}
 void liftCheck()
 {
     if(Lift.position(degrees) > liftLimit && Controller1.ButtonUp.pressing())
@@ -63,7 +46,6 @@ int controllerLoop()
         // Spin both motors in the forward direction.
         LeftDrive.spin(forward);
         RightDrive.spin(forward);
-        trapDoorCheck();
         liftCheck();
         wait(10, msec);
     }
@@ -91,11 +73,12 @@ void mogoDOWN()
 void liftUP()
 {
     Lift.spin(forward);
-    Lift.setStopping(hold);
+    Lift.setStopping(coast);
 }
 void liftDOWN()
 {
     Lift.spin(reverse);
+    Lift.setStopping(coast);
 }
 void liftNONE()
 {
