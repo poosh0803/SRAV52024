@@ -8,21 +8,19 @@ using namespace vex;
 void autonPlanB()
 {
    mogoGOUP();    //mogo clip spin up
-   Imu.setHeading(0, degrees);
+   Imu.setHeading(130, degrees);
    Lift.setPosition(0,degrees);
    pid_Init();
 
-   drive_w_PID(reverse, 10, inches, 50);
-   turn_to_heading(270);
-   turn_to_heading(270);
-   drive_w_PID(reverse, 2, inches, 50);
-   Intake.spin(forward);
-   wait(1,sec);
-   Intake.stop();
-   drive_w_PID(reverse, 6, inches, 50);
-   turn_to_heading(135);
-   drive_w_PID(reverse, 37, inches, 50);
+   drive_w_PID(forward, 5.5, inches, 50);
+   Lift.setVelocity(80,percent);
+   Lift.spinFor(reverse, 0.6, sec);
+   Lift.spinToPosition(0, degrees, false);
+
+   turn_to_heading(123);
+   drive_w_PID(reverse, 31, inches, 45);
    mogoGODOWN();
+
    wait(500,msec);
    drive_w_PID(reverse, 5, inches, 50);
    turn_to_heading(355);

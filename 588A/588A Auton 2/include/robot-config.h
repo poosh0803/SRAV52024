@@ -35,7 +35,7 @@ extern motor_group Intake;
 extern motor Lift;
 extern inertial Imu;
 extern digital_out Clamp;
-extern digital_out trapDoor;
+extern digital_out EndGame;
 
 extern vision::signature mogoStarboardCam__MOGO;
 extern vision mogoStarboardCam;

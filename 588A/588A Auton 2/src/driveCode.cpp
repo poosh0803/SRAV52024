@@ -5,18 +5,6 @@
 #include "vex_units.h"
 #include <cstdio>
 using namespace vex;
-int liftLimit = 1700;
-void liftCheck()
-{
-    if(Lift.position(degrees) > liftLimit && Controller1.ButtonUp.pressing())
-    {
-        Lift.stop();
-    }
-    else if(Lift.position(degrees) < 0 && Controller1.ButtonDown.pressing())
-    {
-        Lift.stop();
-    }
-}
 int controllerLoop()
 {
     // Deadband stops the motors when Axis values are close to zero.
@@ -46,7 +34,6 @@ int controllerLoop()
         // Spin both motors in the forward direction.
         LeftDrive.spin(forward);
         RightDrive.spin(forward);
-        liftCheck();
         wait(10, msec);
     }
 }
@@ -84,12 +71,10 @@ void liftNONE()
 {
     Lift.stop();
 }
-int liftLock = 2;
-void liftUnlimit()
+void endGameAct()
 {
-    if(liftLock > 0) {liftLock--; return;}
-    liftLimit = 1800;
-    Controller1.rumble("..");
+    EndGame.set(true);
+    Controller1.rumble("...");
 }
 void controller_reg()
 {
@@ -99,11 +84,14 @@ void controller_reg()
     Controller1.ButtonR2.released(intakeNONE);
     Controller1.ButtonL1.pressed(mogoUP);
     Controller1.ButtonL2.pressed(mogoDOWN);
-    Controller1.ButtonRight.pressed(liftUP);
-    Controller1.ButtonRight.released(liftNONE);
+    // Controller1.ButtonRight.pressed(liftUP);
+    // Controller1.ButtonRight.released(liftNONE);
     Controller1.ButtonDown.pressed(liftDOWN);
+    Controller1.ButtonDown.released(liftNONE);
+    Controller1.ButtonB.pressed(liftUP);
     Controller1.ButtonB.released(liftNONE);
-    Controller1.ButtonLeft.pressed(liftUnlimit);
+    // Controller1.ButtonLeft.pressed(liftUnlimit);
+    Controller1.ButtonUp.pressed(endGameAct);
 }
 
 void driveCode_Init()
