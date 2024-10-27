@@ -50,7 +50,7 @@ void robot_init(void)
     Lift.setMaxTorque(100,percent);
     Lift.setVelocity(100, percent);
     Lift.setPosition(0, degrees);
-    logVal(LOG_INFO, "%srobot initialized%s\n");
+    // logVal(LOG_INFO, "%srobot initialized%s\n");
 }
 void imu_init(void)
 {
@@ -68,7 +68,7 @@ void imu_init(void)
     Brain.Screen.clearScreen();
     Brain.Screen.setCursor(1,1);
     // Controller1.rumble("..");
-    logVal(LOG_INFO, "%sImu initialized%s\n");
+    // logVal(LOG_INFO, "%sImu initialized%s\n");
 }
 void mogoGOUP()
 {

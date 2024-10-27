@@ -5,6 +5,9 @@
 #include "vex_units.h"
 #include <cstdio>
 using namespace vex;
+
+int endGameCount = 0;
+
 int controllerLoop()
 {
     // Deadband stops the motors when Axis values are close to zero.
@@ -60,12 +63,12 @@ void mogoDOWN()
 void liftUP()
 {
     Lift.spin(forward);
-    Lift.setStopping(coast);
+    Lift.setStopping(hold);
 }
 void liftDOWN()
 {
     Lift.spin(reverse);
-    Lift.setStopping(coast);
+    Lift.setStopping(hold);
 }
 void liftNONE()
 {
@@ -73,8 +76,16 @@ void liftNONE()
 }
 void endGameAct()
 {
-    EndGame.set(true);
-    Controller1.rumble("...");
+    if (endGameCount < 3)
+    {
+        endGameCount+=1;
+    }
+    else
+    {
+        EndGame.set(true);
+        Controller1.rumble("...");
+    }
+
 }
 void controller_reg()
 {
@@ -84,12 +95,12 @@ void controller_reg()
     Controller1.ButtonR2.released(intakeNONE);
     Controller1.ButtonL1.pressed(mogoUP);
     Controller1.ButtonL2.pressed(mogoDOWN);
-    // Controller1.ButtonRight.pressed(liftUP);
-    // Controller1.ButtonRight.released(liftNONE);
-    Controller1.ButtonDown.pressed(liftDOWN);
-    Controller1.ButtonDown.released(liftNONE);
-    Controller1.ButtonB.pressed(liftUP);
-    Controller1.ButtonB.released(liftNONE);
+    Controller1.ButtonRight.pressed(liftDOWN);
+    Controller1.ButtonRight.released(liftNONE);
+    // Controller1.ButtonDown.pressed(liftDOWN);
+    // Controller1.ButtonDown.released(liftNONE);
+    Controller1.ButtonY.pressed(liftUP);
+    Controller1.ButtonY.released(liftNONE);
     // Controller1.ButtonLeft.pressed(liftUnlimit);
     Controller1.ButtonUp.pressed(endGameAct);
 }

@@ -7,6 +7,7 @@ using namespace vex;
 
 void autonPlanB()
 {
+   EndGame.set(false);
    mogoGOUP();    //mogo clip spin up
    Imu.setHeading(130, degrees);
    Lift.setPosition(0,degrees);
@@ -28,7 +29,7 @@ void autonPlanB()
    drive_w_PID(forward, 28, inches, 50);
    turn_to_heading(270);
    turn_to_heading(270);
-   drive_w_PID(forward, 12, inches, 50);
+   drive_w_PID(forward, 10, inches, 50);
    wait(100,msec);
    drive_w_PID(reverse, 5, inches, 30);
    turn_to_heading(190);

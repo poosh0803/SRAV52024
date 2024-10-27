@@ -6,9 +6,10 @@
 using namespace vex;
 
 void autonSkill()
-{   
-    logVal(LOG_INFO, "Skill Start");
+{  
+    // logVal(LOG_INFO, "Skill Start");
     //Init
+    EndGame.set(false);
     mogoGOUP();
     Imu.setHeading(90, degrees);
     pid_Init();
@@ -64,6 +65,12 @@ void autonSkill()
     mogoGOUP();
     intakeSTOP();
     Intake.spinFor(reverse, 180, degrees);
+
+
+
+
+
+
 
     //Endgame
     Lift.spinToPosition(1700,degrees,false);
