@@ -8,7 +8,7 @@ void autonPlanD()
 {
     pid_Init();
     mogoGOUP();
-    Imu.setHeading(135,degrees);
+    Imu.setHeading(120,degrees);
     
     //Auton Start Here
     drive_w_PID(reverse, 40, inches, 50);

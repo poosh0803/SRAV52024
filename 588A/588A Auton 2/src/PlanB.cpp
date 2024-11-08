@@ -13,9 +13,9 @@ void autonPlanB()
    Lift.setPosition(0,degrees);
    pid_Init();
 
-   drive_w_PID(forward, 5.5, inches, 50);
+   drive_w_PID(forward, 6, inches, 50);
    Lift.setVelocity(80,percent);
-   Lift.spinFor(reverse, 0.6, sec);
+   Lift.spinFor(reverse, 0.7, sec);
    Lift.spinToPosition(0, degrees, false);
 
    turn_to_heading(123);
@@ -27,11 +27,11 @@ void autonPlanB()
    turn_to_heading(355);
    intakeSTART();
    drive_w_PID(forward, 28, inches, 50);
-   turn_to_heading(270);
-   turn_to_heading(270);
-   drive_w_PID(forward, 10, inches, 50);
+   turn_to_heading(250);
+   turn_to_heading(250);
+   drive_w_PID(forward, 10.7, inches, 50);
    wait(100,msec);
    drive_w_PID(reverse, 5, inches, 30);
    turn_to_heading(190);
-   drive_w_PID(forward, 22, inches, 70);
+   drive_w_PID(forward, 24, inches, 70);
 }
