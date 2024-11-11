@@ -18,8 +18,8 @@ void autonPlanC()
     turn_to_heading(180);
     drive_w_PID(forward, 30, inches);
     wait(2, sec);
-    turn_to_heading(0);
-    drive_w_PID(forward, 48, inches);
+    turn_to_heading(60);
+    drive_w_PID(reverse, 48, inches);
 
     pid_Ends();
 }
