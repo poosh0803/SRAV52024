@@ -76,17 +76,25 @@ void liftNONE()
 }
 void endGameAct()
 {
-    if (endGameCount < 3)
-    {
-        endGameCount+=1;
-    }
-    else
-    {
-        EndGame.set(true);
-        Controller1.rumble("...");
-    }
+
+    EndGame.set(true);
+    Controller1.rumble("...");
 
 }
+bool doinker = false;
+
+void doinkerAct()
+{
+  if(doinker) {
+    doinker = false;
+    Doinker.set(false);
+  } 
+  else {
+    doinker = true;
+    Doinker.set(true);
+  }
+}
+
 void controller_reg()
 {
     Controller1.ButtonR1.pressed(intakeIN);
@@ -103,6 +111,7 @@ void controller_reg()
     Controller1.ButtonY.released(liftNONE);
     // Controller1.ButtonLeft.pressed(liftUnlimit);
     Controller1.ButtonUp.pressed(endGameAct);
+    Controller1.ButtonA.pressed(doinkerAct);
 }
 
 void driveCode_Init()

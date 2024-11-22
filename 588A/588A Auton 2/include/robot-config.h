@@ -36,6 +36,7 @@ extern motor Lift;
 extern inertial Imu;
 extern digital_out Clamp;
 extern digital_out EndGame;
+extern digital_out Doinker;
 
 extern vision::signature mogoStarboardCam__MOGO;
 extern vision mogoStarboardCam;
@@ -53,4 +54,5 @@ void intakeSTART(void);
 void intakeSTOP(void);
 void liftUP(void);
 void liftDOWN(void);
+void doinkerAct(void);
 // void selfCheck(void);
