@@ -81,16 +81,16 @@ void endGameAct()
     Controller1.rumble("...");
 
 }
-bool doinker = false;
+bool doinkerPos = false;
 
 void doinkerAct()
 {
-  if(doinker) {
-    doinker = false;
+  if(doinkerPos) {
+    doinkerPos = false;
     Doinker.set(false);
   } 
   else {
-    doinker = true;
+    doinkerPos = true;
     Doinker.set(true);
   }
 }

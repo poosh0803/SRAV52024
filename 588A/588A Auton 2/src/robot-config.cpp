@@ -32,7 +32,7 @@ motor_group Intake = motor_group(PrimaryIntake);//
 motor Lift = motor(PORT16, ratio36_1, true);//
 digital_out Clamp = digital_out(Brain.ThreeWirePort.A);
 digital_out EndGame = digital_out(Brain.ThreeWirePort.B);
-digital_out doinker = digital_out(Brain.ThreeWirePort.H);
+digital_out Doinker = digital_out(Brain.ThreeWirePort.H);
 
 vision::signature mogoStarboardCam__MOGO = vision::signature(1, -2769, -1219, -1994, -7117, -5391, -6254, 2.900, 0);
 vex::vision mogoStarboardCam = vision( vex::PORT6, 26, mogoStarboardCam__MOGO);
