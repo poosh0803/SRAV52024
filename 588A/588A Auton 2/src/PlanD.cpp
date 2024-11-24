@@ -6,20 +6,31 @@ using namespace vex;
 
 void autonPlanD()
 {
+
     pid_Init();
     mogoGOUP();
-    Imu.setHeading(120,degrees);
+    Imu.setHeading(90,degrees);
     
     //Auton Start Here
-    drive_w_PID(reverse, 40, inches, 50);
+    drive_w_PID(reverse, 30.8, inches, 50);
+    turn_to_heading(120);
+    drive_w_PID(reverse, 20, inches, 50);
     mogoGODOWN();
     wait(0.5, seconds);
     Intake.spin(forward);
-    turn_to_heading(180);
-    drive_w_PID(forward, 30, inches);
-    wait(2, sec);
-    turn_to_heading(0);
-    drive_w_PID(forward, 48, inches);
+    turn_to_heading(90);
+    drive_w_PID(forward, 25, inches);
+    mogoGOUP();
+    Intake.stop();
+    wait(1.5, sec);
+    turn_to_heading(177);
+    drive_w_PID(reverse, 26, inches);
+    mogoGODOWN();
+    Intake.spin(forward);
+    turn_to_heading(45);
+    drive_w_PID(forward, 29, inches);
 
     pid_Ends();
+
+
 }

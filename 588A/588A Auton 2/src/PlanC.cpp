@@ -8,18 +8,26 @@ void autonPlanC()
 {
     pid_Init();
     mogoGOUP();
-    Imu.setHeading(240,degrees);
+    Imu.setHeading(270,degrees);
     
     //Auton Start Here
-    drive_w_PID(reverse, 40, inches, 50);
+    drive_w_PID(reverse, 30.8, inches, 50);
+    turn_to_heading(240);
+    drive_w_PID(reverse, 20, inches, 50);
     mogoGODOWN();
     wait(0.5, seconds);
     Intake.spin(forward);
-    turn_to_heading(180);
-    drive_w_PID(forward, 30, inches);
-    wait(2, sec);
-    turn_to_heading(60);
-    drive_w_PID(reverse, 48, inches);
+    turn_to_heading(270);
+    drive_w_PID(forward, 25, inches);
+    mogoGOUP();
+    Intake.stop();
+    wait(1.5, sec);
+    turn_to_heading(183);
+    drive_w_PID(reverse, 26, inches);
+    mogoGODOWN();
+    Intake.spin(forward);
+    turn_to_heading(315);
+    drive_w_PID(forward, 29, inches);
 
     pid_Ends();
 }
