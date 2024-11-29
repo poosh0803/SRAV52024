@@ -27,11 +27,16 @@ void autonPlanB()
    turn_to_heading(355);
    intakeSTART();
    drive_w_PID(forward, 28, inches, 50);
+   turn_to_heading(280);
+   turn_to_heading(280);
+   drive_w_PID(forward, 10.8, inches, 50);
+   wait(100,msec);
+   drive_w_PID(reverse, 10.8, inches, 30);
    turn_to_heading(250);
    turn_to_heading(250);
    drive_w_PID(forward, 10.7, inches, 50);
    wait(100,msec);
    drive_w_PID(reverse, 5, inches, 30);
    turn_to_heading(190);
-   drive_w_PID(forward, 24, inches, 70);
+   drive_w_PID(forward, 24.8, inches, 70);
 }

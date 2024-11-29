@@ -22,12 +22,16 @@ void autonPlanC()
     mogoGOUP();
     Intake.stop();
     wait(1.5, sec);
-    turn_to_heading(183);
+    turn_to_heading(182);
     drive_w_PID(reverse, 26, inches);
     mogoGODOWN();
     Intake.spin(forward);
-    turn_to_heading(315);
-    drive_w_PID(forward, 29, inches);
+    turn_to_heading(320);
+    drive_w_PID(forward, 23, inches);
+    Doinker.set(true);
+    drive_w_PID(reverse, 9, inches);
+    Doinker.set(false);
+    drive_w_PID(forward, 9, inches);
 
     pid_Ends();
 }

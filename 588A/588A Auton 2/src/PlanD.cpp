@@ -6,7 +6,6 @@ using namespace vex;
 
 void autonPlanD()
 {
-
     pid_Init();
     mogoGOUP();
     Imu.setHeading(90,degrees);
@@ -29,6 +28,10 @@ void autonPlanD()
     Intake.spin(forward);
     turn_to_heading(45);
     drive_w_PID(forward, 29, inches);
+    Doinker.set(true);
+    drive_w_PID(reverse, 9, inches);
+    Doinker.set(false);
+    drive_w_PID(forward, 9, inches);
 
     pid_Ends();
 
