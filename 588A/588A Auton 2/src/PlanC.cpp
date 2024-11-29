@@ -27,8 +27,9 @@ void autonPlanC()
     mogoGODOWN();
     Intake.spin(forward);
     turn_to_heading(320);
-    drive_w_PID(forward, 23, inches);
+    drive_w_PID(forward, 23, inches, 60);
     Doinker.set(true);
+    wait(0.2, seconds);
     drive_w_PID(reverse, 9, inches);
     Doinker.set(false);
     drive_w_PID(forward, 9, inches);

@@ -26,9 +26,9 @@ int main()
 {
   printf("\033[2J");
   // Competition.autonomous(autonPlanA); planSel = 'A'; // Slot 1
-  // Competition.autonomous(autonPlanB); planSel = 'B'; // Slot 2
+  Competition.autonomous(autonPlanB); planSel = 'B'; // Slot 2
   // Competition.autonomous(autonPlanC); planSel = 'C'; // Slot 3
-  Competition.autonomous(autonPlanD); planSel = 'D'; // Slot 4
+  // Competition.autonomous(autonPlanD); planSel = 'D'; // Slot 4
   // Competition.autonomous(autonSkill); planSel = 'S'; // Slot 8
   Competition.drivercontrol(usercontrol);
   Controller1.Screen.setCursor(3,1);
