@@ -94,7 +94,10 @@ void doinkerAct()
     Doinker.set(true);
   }
 }
-
+void liftReset()
+{
+    Lift.spinToPosition(0, degrees);
+}
 void controller_reg()
 {
     Controller1.ButtonR1.pressed(intakeIN);
@@ -112,6 +115,7 @@ void controller_reg()
     // Controller1.ButtonLeft.pressed(liftUnlimit);
     Controller1.ButtonUp.pressed(endGameAct);
     Controller1.ButtonA.pressed(doinkerAct);
+    Controller1.ButtonB.pressed(liftReset);
 }
 
 void driveCode_Init()
