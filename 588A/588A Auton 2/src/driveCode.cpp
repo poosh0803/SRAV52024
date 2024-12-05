@@ -104,7 +104,7 @@ void controller_reg()
     Controller1.ButtonR1.released(intakeNONE);
     Controller1.ButtonR2.pressed(intakeOUT);
     Controller1.ButtonR2.released(intakeNONE);
-    Controller1.ButtonL1.pressed(mogoUP);
+    Controller1.ButtonL1.pressed(mogoUP); 
     Controller1.ButtonL2.pressed(mogoDOWN);
     Controller1.ButtonRight.pressed(liftDOWN);
     Controller1.ButtonRight.released(liftNONE);

@@ -13,12 +13,12 @@ void autonPlanC()
     //Auton Start Here
     drive_w_PID(reverse, 30.8, inches, 50);
     turn_to_heading(240);
-    drive_w_PID(reverse, 20, inches, 50);
+    drive_w_PID(reverse, 19, inches, 50);
     mogoGODOWN();
     wait(0.5, seconds);
     Intake.spin(forward);
     turn_to_heading(270);
-    drive_w_PID(forward, 25, inches);
+    drive_w_PID(forward, 24.5, inches);
     mogoGOUP();
     Intake.stop();
     wait(1.5, sec);
