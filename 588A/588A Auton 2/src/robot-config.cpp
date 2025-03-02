@@ -17,7 +17,7 @@ controller Controller1 = controller(primary);
 motor L1 = motor(PORT20, ratio18_1, true);//
 motor L2 = motor(PORT2, ratio18_1, true);//
 motor L3 = motor(PORT3, ratio18_1, false);//
-motor R1 = motor(PORT9, ratio18_1, false);//
+motor R1 = motor(PORT8, ratio18_1, false);//
 motor R2 = motor(PORT12, ratio18_1, true);//
 motor R3 = motor(PORT11, ratio18_1, false);//
 motor_group RightDrive = motor_group(R1, R2, R3);
@@ -31,9 +31,9 @@ motor SecondaryIntake = motor(PORT14, ratio18_1, true);
 motor_group Intake = motor_group(PrimaryIntake, SecondaryIntake);//
 
 motor Lift = motor(PORT5, ratio36_1, true);//
-digital_out Clamp = digital_out(Brain.ThreeWirePort.A);
+digital_out Clamp = digital_out(Brain.ThreeWirePort.H);
 digital_out EndGame = digital_out(Brain.ThreeWirePort.B);
-digital_out Doinker = digital_out(Brain.ThreeWirePort.H);
+//digital_out Doinker = digital_out(Brain.ThreeWirePort.H);
 
 vision::signature mogoStarboardCam__MOGO = vision::signature(1, -2769, -1219, -1994, -7117, -5391, -6254, 2.900, 0);
 vex::vision mogoStarboardCam = vision( vex::PORT6, 26, mogoStarboardCam__MOGO);

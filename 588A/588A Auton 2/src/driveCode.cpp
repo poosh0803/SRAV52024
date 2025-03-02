@@ -100,10 +100,10 @@ void liftReset()
 }
 void controller_reg()
 {
-    Controller1.ButtonR1.pressed(intakeIN);
-    Controller1.ButtonR1.released(intakeNONE);
-    Controller1.ButtonR2.pressed(intakeOUT);
+    Controller1.ButtonR2.pressed(intakeIN);
     Controller1.ButtonR2.released(intakeNONE);
+    Controller1.ButtonR1.pressed(intakeOUT);
+    Controller1.ButtonR1.released(intakeNONE);
     Controller1.ButtonL1.pressed(mogoUP); 
     Controller1.ButtonL2.pressed(mogoDOWN);
     Controller1.ButtonRight.pressed(liftDOWN);
@@ -114,7 +114,7 @@ void controller_reg()
     Controller1.ButtonY.released(liftNONE);
     // Controller1.ButtonLeft.pressed(liftUnlimit);
     Controller1.ButtonUp.pressed(endGameAct);
-    Controller1.ButtonA.pressed(doinkerAct);
+    //Controller1.ButtonA.pressed(doinkerAct);
     Controller1.ButtonB.pressed(liftReset);
 }
 
