@@ -10,7 +10,9 @@
 #include "vex_triport.h"
 
 using namespace vex;
-
+const int IntakeSpeed = 100;
+int blueORred = 0;
+bool intakingstate = false;
 brain Brain;
 controller Controller1 = controller(primary);
 
@@ -41,6 +43,8 @@ vex::vision mogoStarboardCam = vision( vex::PORT6, 26, mogoStarboardCam__MOGO);
 vision::signature mogoPortCam__MOGO = vision::signature(1, -2367, -1217, -1792, -6869, -5247, -6058, 4.8, 0);
 vex::vision mogoPortCam = vision(PORT4, 50, mogoPortCam__MOGO);
 
+optical colourSensor = optical(PORT18);
+
 void robot_init(void)
 {
     LeftDrive.setMaxTorque(100,percent);
@@ -50,7 +54,7 @@ void robot_init(void)
     PrimaryIntake.setMaxTorque(100,percent);
     PrimaryIntake.setVelocity(100,percent);
     SecondaryIntake.setMaxTorque(100,percent);
-    SecondaryIntake.setVelocity(80,percent);
+    SecondaryIntake.setVelocity(IntakeSpeed,percent);
     // Intake.setMaxTorque(100,percent);
     // Intake.setVelocity(100,percent);
     Lift.setMaxTorque(100,percent);
@@ -112,3 +116,36 @@ void intakeSTOP()
     Intake.stop();
 }
 
+bool colourSortEnd = false;
+void autoColour()
+{
+    colourSortEnd = false;
+    colourSensor.setLightPower(100,percent);
+    colourSensor.setLight(vex::ledState::on);
+    SecondaryIntake.setVelocity(50,percent);
+    if(intakingstate) Intake.spin(reverse);
+    while(!colourSortEnd)
+    {
+        if(blueORred == 0)
+        {
+            if(colourSensor.hue() >= 10 && colourSensor.hue() <=20)
+            {
+                Intake.stop();
+                wait(100,msec);
+            }
+        }
+        else
+        {
+
+        }
+        wait(10,msec);
+    }
+}
+void autoColourEnds()
+{
+    SecondaryIntake.setVelocity(IntakeSpeed,percent);
+    // Intake.spin(reverse);
+    if(intakingstate) Intake.spin(reverse);
+    colourSortEnd = true;
+    colourSensor.setLight(vex::ledState::off);
+}

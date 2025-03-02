@@ -18,6 +18,7 @@ char planSel = 'X';
 void usercontrol(void)
 {
   driveCode_Init();
+
   while (1) {
     wait(20, msec);
   }

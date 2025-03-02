@@ -43,14 +43,17 @@ int controllerLoop()
 void intakeIN()
 {
     Intake.spin(forward);
+    intakingstate = true;
 }
 void intakeOUT()
 {
     Intake.spin(reverse);
+    intakingstate = true;
 }
 void intakeNONE()
 {
     Intake.stop();
+    intakingstate = false;
 }
 void mogoUP()
 {
@@ -114,8 +117,9 @@ void controller_reg()
     Controller1.ButtonY.released(liftNONE);
     // Controller1.ButtonLeft.pressed(liftUnlimit);
     Controller1.ButtonUp.pressed(endGameAct);
-    //Controller1.ButtonA.pressed(doinkerAct);
     Controller1.ButtonB.pressed(liftReset);
+    Controller1.ButtonA.pressed(autoColour);
+    Controller1.ButtonA.released(autoColourEnds);
 }
 
 void driveCode_Init()

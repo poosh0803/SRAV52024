@@ -55,4 +55,8 @@ void intakeSTOP(void);
 void liftUP(void);
 void liftDOWN(void);
 void doinkerAct(void);
+void autoColour(void);
+void autoColourEnds(void);
 // void selfCheck(void);
+
+extern bool intakingstate;
