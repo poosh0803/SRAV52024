@@ -63,6 +63,14 @@ void mogoDOWN()
 {
     Clamp.set(false);
 }
+void IntakeringUP()
+{
+    Intakering.set(true);
+}
+void IntakeringDOWN()
+{
+    Intakering.set(false);
+}
 void liftUP()
 {
     Lift.spin(forward);
@@ -109,12 +117,12 @@ void controller_reg()
     Controller1.ButtonR1.released(intakeNONE);
     Controller1.ButtonL1.pressed(mogoUP); 
     Controller1.ButtonL2.pressed(mogoDOWN);
-    Controller1.ButtonRight.pressed(liftDOWN);
-    Controller1.ButtonRight.released(liftNONE);
+    Controller1.ButtonY.pressed(liftDOWN);
+    Controller1.ButtonY.released(liftNONE);
     // Controller1.ButtonDown.pressed(liftDOWN);
     // Controller1.ButtonDown.released(liftNONE);
-    Controller1.ButtonY.pressed(liftUP);
-    Controller1.ButtonY.released(liftNONE);
+    Controller1.ButtonRight.pressed(liftUP);
+    Controller1.ButtonRight.released(liftNONE);
     // Controller1.ButtonLeft.pressed(liftUnlimit);
     Controller1.ButtonUp.pressed(endGameAct);
     Controller1.ButtonB.pressed(liftReset);
@@ -126,4 +134,16 @@ void driveCode_Init()
 {
     controller_reg();
     task controllerLoopTask(controllerLoop);
+}
+
+void doinkerAct()
+{
+  if(doinkerPos) {
+    doinkerPos = false;
+    Doinker.set(false);
+  } 
+  else {
+    doinkerPos = true;
+    Doinker.set(true);
+  }
 }

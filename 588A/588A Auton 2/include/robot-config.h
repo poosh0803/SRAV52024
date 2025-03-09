@@ -37,6 +37,7 @@ extern inertial Imu;
 extern digital_out Clamp;
 extern digital_out EndGame;
 extern digital_out Doinker;
+extern digital_out Intakering;
 
 extern vision::signature mogoStarboardCam__MOGO;
 extern vision mogoStarboardCam;
