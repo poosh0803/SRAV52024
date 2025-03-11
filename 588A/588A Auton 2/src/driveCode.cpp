@@ -136,14 +136,4 @@ void driveCode_Init()
     task controllerLoopTask(controllerLoop);
 }
 
-void doinkerAct()
-{
-  if(doinkerPos) {
-    doinkerPos = false;
-    Doinker.set(false);
-  } 
-  else {
-    doinkerPos = true;
-    Doinker.set(true);
-  }
-}
+
